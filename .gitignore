@@ -1,4 +1,6 @@
 venv
+
+# Visual Studio Code
 .vscode/
 morpho-workspace.code-workspace
 
@@ -118,4 +120,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Database files
 routes.db
