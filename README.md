@@ -20,5 +20,8 @@ Sovelluksen tarkoituksena on tarjota hupia ja hyötyä kiipeilyharrastukseen ant
 
 Suosituksia muodostavaa järjestelmää voi kehittää varmasti loputtomasti, mutta aluksi lähdetään liikkeelle yksinkertaisesta konseptista.
 
+## User storyt
+User storyja on kerätty erilliseen [User stories -dokumenttiin](https://github.com/sainikumara/morpho/blob/master/documentation/userstories.md).
+
 ## Tietokantakaavio
 ![alt text](https://github.com/sainikumara/morpho/blob/master/documentation/tietokantakaavio.png "Tietokantakaavio")
