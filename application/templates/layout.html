@@ -6,10 +6,15 @@
   </head>
 
   <body>
-    {% block body %}
+      <ul>
+	<li><a href="{{ url_for('routes_index') }}">List routes</a></li>
+	<li><a href="{{ url_for('routes_form') }}">Add a route</a></li>
+      </ul>
+
+      {% block body %}
       <p>
         Content.
       </p>
-    {% endblock %}
+      {% endblock %}
   </body>
 </html>

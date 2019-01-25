@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <table>
+    <tr>
+      <th>Route</th>
+      <th>Done</th>
+      <th></th>
+    </tr>
+    {% for route in routes %}
+    <tr>
+      <td>{{ route.name }}</td>
+      <td>{{ route.done }}</td>
+      <td>
+	<form method="POST" action="{{ url_for('routes_set_done', route_id=route.id) }}">
+	  <input type="submit" value="Change status!"/>
+	</form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
