@@ -4,17 +4,26 @@
   <table>
     <tr>
       <th>Route</th>
+      <th>Grade</th>
       <th>Done</th>
+      <th></th>
       <th></th>
     </tr>
     {% for route in routes %}
     <tr>
       <td>{{ route.name }}</td>
+      <td>{{ route.grade }}</td>
       <td>{{ route.done }}</td>
       <td>
-	<form method="POST" action="{{ url_for('routes_set_done', route_id=route.id) }}">
-	  <input type="submit" value="Change status!"/>
-	</form>
+	      <form method="POST" action="{{ url_for('routes_set_done', route_id=route.id) }}">
+	        <input type="submit" value="Change status!"/>
+        </form>
+      </td>
+      <td>
+        <form method="POST" action="{{ url_for('ratings_create', route_id=route.id ) }}">
+          <input type="number" name="value"/>
+          <input type="submit" value="Add a new rating"/>
+	      </form>
       </td>
     </tr>
     {% endfor %}

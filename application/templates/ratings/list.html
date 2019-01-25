@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <table>
+    <tr>
+      <th>Route</th>
+      <th>Rating</th>
+    </tr>
+    {% for rating in ratings %}
+    <tr>
+      <td>{{ rating.route }}</td>
+      <td>{{ rating.value }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

@@ -7,8 +7,10 @@ class Route(db.Model):
     onupdate=db.func.current_timestamp())
 
     name = db.Column(db.String(144), nullable=False)
-    done = db.Column(db.Boolean, nullable=False)
+    grade = db.Column(db.Integer, nullable=False)
+    done = db.Column(db.Boolean, nullable=True)
 
-    def __init__(self, name):
+    def __init__(self, name, grade):
         self.name = name
+        self.grade = grade
         self.done = False

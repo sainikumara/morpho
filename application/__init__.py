@@ -11,5 +11,7 @@ from application import views
 
 from application.routes import models
 from application.routes import views
+from application.ratings import models
+from application.ratings import views
 
 db.create_all()
