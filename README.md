@@ -19,3 +19,6 @@ Sovelluksen tarkoituksena on tarjota hupia ja hyötyä kiipeilyharrastukseen ant
 - suositusten haku
 
 Suosituksia muodostavaa järjestelmää voi kehittää varmasti loputtomasti, mutta aluksi lähdetään liikkeelle yksinkertaisesta konseptista.
+
+## Tietokantakaavio
+![alt text](https://github.com/sainikumara/morpho/blob/master/documentation/tietokantakaavio.png "Tietokantakaavio")
