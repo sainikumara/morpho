@@ -3,6 +3,7 @@
 ## Peruskäyttäjä
 - Peruskäyttäjänä haluan lisätä sovellukseen reittejä. (toteutettu)
 - Peruskäyttäjänä haluan merkata, mitkä reitit olen kiivennyt. (toteutettu)
+- Peruskäyttäjänä haluan voida antaa reiteille arvosanoja. (toteutettu)
 - Peruskäyttäjänä haluan luoda sovellukseen yksilöllisen käyttäjätunnuksen.
 - Peruskäyttäjänä haluan kirjautua sovellukseen sisään, jotta voin saada yksilöidyn käyttökokemuksen.
 - Peruskäyttäjänä haluan nähdä reittilistauksessa, mitkä reitit juuri minä olen kiivennyt.
