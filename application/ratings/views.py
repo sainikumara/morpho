@@ -1,5 +1,6 @@
-from application import app, db
 from flask import redirect, render_template, request, url_for
+
+from application import app, db
 from application.routes.models import Route
 from application.ratings.models import Rating
 

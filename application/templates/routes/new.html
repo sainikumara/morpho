@@ -1,9 +1,39 @@
 {% extends "layout.html" %}
-  
+
 {% block body %}
+<!-- <form method="POST" action="{{ url_for('routes_create') }}">
+  <input type="text" name="name" />
+  <input type="text" name="grade" />
+  <input type="submit" value="Add a new route" />
+</form> -->
 <form method="POST" action="{{ url_for('routes_create') }}">
-  <input type="text" name="name"/>
-  <input type="text" name="grade"/>
-  <input type="submit" value="Add a new route"/>
+  <table>
+    <tr>
+      <td>
+        {{ form.name.label }}
+      </td>
+      <td>
+        {{ form.name }}
+      </td>
+      <td>
+        <ul>
+          {% for error in form.name.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      </td>
+      <td>
+        {{ form.grade.label }}
+      </td>
+      <td>
+        {{ form.grade }}
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5">
+        <input type="submit" value="Add a new route" />
+      </td>
+    </tr>
+  </table>
 </form>
 {% endblock %}
