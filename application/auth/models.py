@@ -15,7 +15,7 @@ class User(db.Model):
 
     def __init__(self, username, plaintext):
         self.username = username
-        self._password = bcrypt.generate_password_hash(plaintext, 20).decode('utf-8')
+        self._password = bcrypt.generate_password_hash(plaintext, 15).decode('utf-8')
 
     def get_id(self):
         return self.id
