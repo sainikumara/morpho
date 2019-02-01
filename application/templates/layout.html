@@ -1,23 +1,33 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Morpho App</title>
-  </head>
 
-  <body>
-    <h1>Morpho App</h1>
+<head>
+  <meta charset="utf-8">
+  <title>Morpho App</title>
+</head>
 
-    <ul>
-	    <li><a href="{{ url_for('routes_index') }}">List routes</a></li>
-	    <li><a href="{{ url_for('routes_form') }}">Add a route</a></li>
-    </ul>
+<body>
+  <h1>Morpho App</h1>
 
-    {% block body %}
-      <p>
-        Content.
-      </p>
-    {% endblock %}
+  {% if current_user.is_authenticated %}
+  <p>
+    Logged in as {{ current_user.username }}. <a href="{{ url_for('auth_logout') }}">Logout</a>
+  </p>
+  {% else %}
+  <a href="{{ url_for('auth_login') }}">Login</a> <a href="{{ url_for('new_user_form') }}">Sign up</a>
+  {% endif %}
 
-  </body>
+  <ul>
+    <li><a href="{{ url_for('routes_index') }}">List routes</a></li>
+    <li><a href="{{ url_for('routes_form') }}">Add a route</a></li>
+  </ul>
+
+  {% block body %}
+  <p>
+    Content.
+  </p>
+  {% endblock %}
+
+</body>
+
 </html>

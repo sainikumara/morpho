@@ -1,4 +1,5 @@
 from flask import redirect, render_template, request, url_for
+from flask_login import login_required
 
 from application import app, db
 from application.routes.models import Route
@@ -9,6 +10,7 @@ def ratings_index():
     return render_template("ratings/list.html", ratings = Rating.query.all())
 
 @app.route("/<route_id>/ratings", methods=["POST"])
+@login_required
 def ratings_create(route_id):
     rating = Rating(request.form.get("value"), route_id)
 
