@@ -13,8 +13,8 @@ def auth_login():
     form = LoginForm(request.form)
     # mahdolliset validoinnit
 
-    user = User.query.filter_by(username=form.username.data, password=form.password.data).first()
-    if not user:
+    user = User.query.filter_by(username=form.username.data).first_or_404()
+    if not user.is_correct_password(form.password.data):
         return render_template("auth/loginform.html", form = form,
                                error = "No such username or password")
 
