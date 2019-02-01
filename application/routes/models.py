@@ -8,9 +8,7 @@ class Route(db.Model):
 
     name = db.Column(db.String(144), nullable=False)
     grade = db.Column(db.Integer, nullable=False)
-    done = db.Column(db.Boolean, nullable=True)
 
     def __init__(self, name, grade):
         self.name = name
         self.grade = grade
-        self.done = False
