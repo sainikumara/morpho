@@ -1,11 +1,7 @@
 from application import db
+from application.models import Base
 
-class Rating(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
-    date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
-    onupdate=db.func.current_timestamp())
-
+class Rating(Base):
     value = db.Column(db.Integer, nullable=True)
     route_id = db.Column(db.Integer, db.ForeignKey('route.id'), nullable=False)
 
