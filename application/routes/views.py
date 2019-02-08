@@ -9,6 +9,7 @@ from application.ratings.forms import RatingForm
 
 @app.route("/routes", methods=["GET"])
 def routes_index():
+
     return render_template("routes/list.html", routes = Route.query.all(), form = RatingForm())
 
 @app.route("/routes/new/")

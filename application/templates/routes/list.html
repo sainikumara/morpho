@@ -5,6 +5,8 @@
     <tr>
       <th>Route</th>
       <th>Grade</th>
+      <th>Average</th>
+      <th>Ratings</th>
       <th></th>
       <th></th>
     </tr>
@@ -12,6 +14,8 @@
     <tr>
       <td>{{ route.name }}</td>
       <td>{{ route.grade }}</td>
+      <td>{{ route.average_rating(route) }}</td>
+      <td>{{ route.number_of_ratings(route) }}</td>
       <td>
         <table><tr>
           <form method="POST" action="{{ url_for('ratings_create', route_id=route.id ) }}">
