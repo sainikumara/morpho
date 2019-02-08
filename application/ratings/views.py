@@ -4,6 +4,7 @@ from flask_login import login_required, current_user
 from application import app, db
 from application.routes.models import Route
 from application.ratings.models import Rating
+from application.ratings.forms import RatingForm
 
 @app.route("/ratings", methods=["GET"])
 def ratings_index():
@@ -12,7 +13,9 @@ def ratings_index():
 @app.route("/<route_id>/ratings", methods=["POST"])
 @login_required
 def ratings_create(route_id):
-    rating = Rating(request.form.get("value"), route_id)
+    form = RatingForm(request.form)
+
+    rating = Rating(int(form.new_rating.data), int(route_id))
     rating.account_id = current_user.id
 
     db.session().add(rating)

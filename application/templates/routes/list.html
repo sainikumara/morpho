@@ -13,10 +13,20 @@
       <td>{{ route.name }}</td>
       <td>{{ route.grade }}</td>
       <td>
-        <form method="POST" action="{{ url_for('ratings_create', route_id=route.id ) }}">
-          <input type="number" name="value"/>
-          <input type="submit" value="Add a new rating"/>
-	      </form>
+        <table><tr>
+          <form method="POST" action="{{ url_for('ratings_create', route_id=route.id ) }}">
+            {% for subfield in form.new_rating %}
+            <td>{{ subfield }}</td>
+            <td>{{ subfield.label }}</td>
+            {% endfor %}
+            <td><input type="submit" value="Rate"/></td>
+          </form>
+        </tr></table>
+      </td>
+      <td>
+        <form method="POST" action="{{ url_for('routes_delete', route_id=route.id ) }}" >
+          <input type="submit" value="Delete" />
+        </form>
       </td>
     </tr>
     {% endfor %}
