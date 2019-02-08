@@ -43,4 +43,4 @@ def users_create():
     db.session().add(user)
     db.session().commit()
 
-    return redirect(url_for("routes_index"))
+    return redirect(url_for("auth_login"))
