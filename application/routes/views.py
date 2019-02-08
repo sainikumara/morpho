@@ -1,5 +1,5 @@
 from flask import redirect, render_template, request, url_for
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 from application import app, db
 from application.routes.models import Route
@@ -24,6 +24,7 @@ def routes_create():
         return render_template("routes/new.html", form = form)
 
     route = Route(form.name.data, form.grade.data)
+    route.creator_account_id = current_user.id
 
     db.session().add(route)
     db.session().commit()

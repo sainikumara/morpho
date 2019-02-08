@@ -13,6 +13,9 @@ class User(db.Model):
     username = db.Column(db.String(64), unique=True, nullable=False)
     _password = db.Column(db.String(128), nullable=False)
 
+    routes_created = db.relationship("Route", backref='account', lazy=True)
+
+
     def __init__(self, username, plaintext):
         self.username = username
         self._password = bcrypt.generate_password_hash(plaintext, 15).decode('utf-8')
