@@ -14,7 +14,7 @@ class User(db.Model):
     _password = db.Column(db.String(128), nullable=False)
 
     routes_created = db.relationship("Route", backref='account', lazy=True)
-
+    ratings_given = db.relationship("Rating", backref='account', lazy=True)
 
     def __init__(self, username, plaintext):
         self.username = username

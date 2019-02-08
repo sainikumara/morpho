@@ -9,6 +9,9 @@ class Rating(db.Model):
     value = db.Column(db.Integer, nullable=True)
     route = db.Column(db.Integer, nullable=False)
 
+    account_id = db.Column(db.Integer, db.ForeignKey('account.id'),
+                           nullable=False)
+
     def __init__(self, value, route):
         self.value = value
         self.route = route
