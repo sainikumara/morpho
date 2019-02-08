@@ -4,13 +4,20 @@ from flask_login import login_required, current_user
 from application import app, db
 from application.routes.models import Route
 from application.ratings.models import Rating
+from application.auth.models import User
 from application.routes.forms import RouteForm
 from application.ratings.forms import RatingForm
 
 @app.route("/routes", methods=["GET"])
 def routes_index():
+    if current_user.is_authenticated:
+        routes_to_show = Route.routes_user_has_not_rated(Route)
+    else:
+        routes_to_show = Route.query.all()
 
-    return render_template("routes/list.html", routes = Route.query.all(), form = RatingForm())
+    return render_template("routes/list.html",
+        routes = routes_to_show,
+        form = RatingForm())
 
 @app.route("/routes/new/")
 @login_required

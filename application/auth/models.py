@@ -2,6 +2,8 @@ from application import db, bcrypt
 from sqlalchemy.ext.hybrid import hybrid_property
 from application.models import Base
 
+from sqlalchemy.sql import text
+
 class User(Base):
 
     __tablename__ = "account"
@@ -38,3 +40,5 @@ class User(Base):
 
     def is_correct_password(self, plaintext):
         return bcrypt.check_password_hash(self._password, plaintext)
+
+
