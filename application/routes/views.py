@@ -11,7 +11,7 @@ from application.ratings.forms import RatingForm
 @app.route("/routes", methods=["GET"])
 def routes_index():
     if current_user.is_authenticated:
-        routes_to_show = Route.routes_user_has_not_rated(Route)
+        routes_to_show = Route.routes_user_has_rated(Route)
     else:
         routes_to_show = Route.query.all()
 
