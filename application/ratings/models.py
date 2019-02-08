@@ -10,3 +10,6 @@ class Rating(Base):
     def __init__(self, value, route):
         self.value = value
         self.route_id = route
+
+    def _set_rating_value(self, value):
+        self.value = value

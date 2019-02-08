@@ -15,10 +15,17 @@ def ratings_index():
 def ratings_create(route_id):
     form = RatingForm(request.form)
 
-    rating = Rating(int(form.new_rating.data), int(route_id))
-    rating.account_id = current_user.id
+    rating = Rating.query.filter_by(account_id=current_user.id).filter_by(route_id=route_id).first()
 
-    db.session().add(rating)
+    if rating is None:
+        rating = Rating(int(form.new_rating.data), int(route_id))
+        rating.account_id = current_user.id
+        db.session().add(rating)
+    else:
+        rating._set_rating_value(int(form.new_rating.data))
+
+    
     db.session().commit()
 
     return redirect(url_for("routes_index"))
+    
