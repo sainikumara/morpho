@@ -11,6 +11,8 @@ class Route(db.Model):
 
     creator_account_id = db.Column(db.Integer, db.ForeignKey('account.id'),
                            nullable=False)
+    
+    ratings = db.relationship("Rating", backref='route', lazy=True)
 
     def __init__(self, name, grade):
         self.name = name
