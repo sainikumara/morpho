@@ -2,7 +2,7 @@
 
 Helsingin yliopiston tietojenkäsittelytieteen aineopintojen harjoitustyökurssilla Tietokantasovellus (4 op) tehtävä tietokantaa käyttävä websovellus.
 
-Sovellus on toistaiseksi alkutekijöissään, mutta se julkaistaan Heroku-palvelussa, osoitteessa https://morphoapp.herokuapp.com/
+Sovellus on käytettävissä Heroku-palvelussa, osoitteessa https://morphoapp.herokuapp.com/
 
 ## Kuvaus
 Sovelluksen tarkoituksena on tarjota hupia ja hyötyä kiipeilyharrastukseen antamalla käyttäjälle suosituksia reiteistä, jotka voisivat olla juuri hänestä kivoja. Sovellus perustaa suosituksensa käyttäjän kokoon ja ruumiinrakenteeseen sekä muiden, kooltaan ja ruumiinrakenteeltaan samankaltaisten, käyttäjien tekemiin arvosteluihin.
