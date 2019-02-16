@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, StringField, validators
+from wtforms import PasswordField, StringField, IntegerField, validators
 
 class LoginForm(FlaskForm):
     username = StringField("Username", [validators.DataRequired()])
@@ -10,7 +10,15 @@ class LoginForm(FlaskForm):
 
 class NewUserForm(FlaskForm):
     username = StringField("Username", [validators.Length(min=2, max=64)])
-    password = PasswordField("Password", [validators.Length(min=2)])
+    password = PasswordField("Password", [validators.Length(min=2, max=128)])
+
+    class Meta:
+        csrf = False
+
+class UserDataForm(FlaskForm):
+    new_height = IntegerField("Height", [validators.NumberRange(min=40, max=300)])
+    new_weight = IntegerField("Weight", [validators.NumberRange(min=10, max=300)])
+    new_arm_span = IntegerField("Arm Span", [validators.NumberRange(min=40, max=300)])
 
     class Meta:
         csrf = False
