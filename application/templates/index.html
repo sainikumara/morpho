@@ -1,7 +1,33 @@
-{% extends "layout.html" %}
+{% extends "layout.html" %} {% block body %}
+<h2>
+  Routes according to other users
+</h2>
+<p>
+  {{ message }}
+</p>
 
-{% block body %}
-  <p>
-    Welcome to Morpho App!
-  </p>
+<table>
+  <tr>
+    <th>Route</th>
+    <th>Grade</th>
+  </tr>
+  {% for route in routes %}
+  <tr>
+    <td>{{ route.name }}</td>
+    <td>{{ route.grade }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<table>
+  <tr>
+    <th>Average</th>
+  </tr>
+  {% for average in averages %}
+  <tr>
+    <td>{{ average }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
 {% endblock %}

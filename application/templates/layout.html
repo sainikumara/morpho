@@ -18,9 +18,10 @@
   {% endif %}
 
   <ul>
-    <li><a href="{{ url_for('routes_index') }}">List routes</a></li>
-    <li><a href="{{ url_for('routes_form') }}">Add a route</a></li>
-    <li><a href="{{ url_for('user_data') }}">Anthropometry</a></li>
+    <li><a href="{{ url_for('index') }}" target="_top">Front page - recommended routes</a></li>
+    <li><a href="{{ url_for('routes_index') }}" target="_top">List routes</a></li>
+    <li><a href="{{ url_for('routes_form') }}" target="_top">Add a route</a></li>
+    <li><a href="{{ url_for('user_data') }}" target="_top">Anthropometry</a></li>
   </ul>
 
   {% block body %}

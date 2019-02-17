@@ -1,6 +1,19 @@
 from flask import render_template
-from application import app
+from flask_login import login_required, current_user
+
+from application import app, db
+from application.auth.models import User
+from application.routes.models import Route
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    recommendation = Route.create_recommendation(5)
+    message = ""
+
+    if current_user.is_authenticated:
+        message = "Results are based on ratings given by other users with similar anthropometric data to yours"
+    else:
+        message = "Log in and keep your anthropometric data up to date in order to get results relevant to you"
+
+    return render_template("index.html", message = message,
+        routes = recommendation[0], averages = recommendation[1])

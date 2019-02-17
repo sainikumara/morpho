@@ -50,6 +50,45 @@ class Route(Base):
         return avg
 
     @staticmethod
+    def create_recommendation(number_of_recommendations):
+        if current_user.is_authenticated:
+            user = current_user
+            stmt = text("SELECT route_id, AVG(value) AS avg FROM "
+	                "(SELECT * from rating WHERE NOT route_id IN "
+	                "(SELECT rating.route_id from rating WHERE rating.account_id=:user_id) "
+	                "AND rater_height BETWEEN :height - 3 AND :height + 3 "
+	                "AND rater_weight BETWEEN :weight - 3 AND :weight + 3 "
+	                "AND rater_arm_span BETWEEN :arm_span - 3 AND :arm_span + 3) "
+	                "GROUP BY route_id "
+	                "ORDER BY avg DESC "
+	                "LIMIT :how_many").params(
+                        user_id=user.get_id(),
+                        height = user.get_height(),
+                        weight = user.get_weight(),
+                        arm_span = user.get_arm_span(),
+                        how_many = number_of_recommendations
+                    )
+            
+        else:
+            stmt = text("SELECT route_id, AVG(value) AS avg FROM rating "
+                    "GROUP BY route_id ORDER BY avg DESC LIMIT :how_many").params(
+                        how_many = number_of_recommendations
+                    )
+                    
+        res = db.engine.execute(stmt)
+
+        recommended_routes = []
+        average_ratings = []
+        for row in res:
+            route = Route.query.filter_by(id = row[0]).first()
+            recommended_routes.append(route)
+            average_rating = row[1]
+            average_ratings.append(average_rating)
+        
+        return recommended_routes, average_ratings
+
+
+    @staticmethod
     def find_routes_user_has_rated():
         stmt = text("SELECT Route.id FROM Route"
                      " LEFT JOIN Rating ON Rating.route_id = Route.id"
@@ -72,22 +111,22 @@ class Route(Base):
         
         return routes_rated
 
-    # @staticmethod
-    # def find_routes_user_has_not_rated():
-    #     stmt = text("SELECT Route.id FROM Rating"
-    #                  " LEFT JOIN Route ON Rating.route_id = Route.id"
-    #                  " WHERE NOT (Rating.account_id = :user_id)"
-    #                  " ORDER BY Route.grade").params(user_id = current_user.id)
-    #     res = db.engine.execute(stmt)
+    @staticmethod
+    def find_routes_user_has_not_rated():
+        stmt = text("SELECT Route.id FROM Rating"
+                     " LEFT JOIN Route ON Rating.route_id = Route.id"
+                     " WHERE NOT (Rating.account_id = :user_id)"
+                     " ORDER BY Route.grade").params(user_id = current_user.id)
+        res = db.engine.execute(stmt)
 
-    #     print("TULOSTELUAIKA")
+        print("TULOSTELUAIKA")
         
-    #     ids_of_routes_not_rated = []
-    #     for row in res:
-    #         ids_of_routes_not_rated.append(int(row[0]))
-    #         print(row[0])
+        ids_of_routes_not_rated = []
+        for row in res:
+            ids_of_routes_not_rated.append(int(row[0]))
+            print(row[0])
 
-    #     return ids_of_routes_not_rated
+        return ids_of_routes_not_rated
 
     # def routes_user_has_not_rated(self):
     #     ids = self.find_routes_user_has_not_rated()
