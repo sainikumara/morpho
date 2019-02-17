@@ -15,5 +15,8 @@ def index():
     else:
         message = "Log in and keep your anthropometric data up to date in order to get results relevant to you"
 
+    if len(recommendation[0]) == 0:
+        message = "Unfortunately there is not enough data yet to provide a result"
+
     return render_template("index.html", message = message,
         routes = recommendation[0], averages = recommendation[1])
