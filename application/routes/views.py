@@ -10,10 +10,7 @@ from application.ratings.forms import RatingForm
 
 @app.route("/routes", methods=["GET"])
 def routes_index():
-    # if current_user.is_authenticated:
-    #     routes_to_show = Route.routes_user_has_rated(Route)
-    # else:
-    routes_to_show = Route.query.all()
+    routes_to_show = Route.query.order_by(Route.grade).all()
 
     return render_template("routes/list.html",
         routes = routes_to_show,
@@ -27,6 +24,7 @@ def routes_form():
 @app.route("/<route_id>/delete/", methods=["POST"])
 @login_required
 def routes_delete(route_id):
+    Rating.query.filter_by(route_id=route_id).delete()
     Route.query.filter_by(id=route_id).delete()
     db.session().commit()
 
