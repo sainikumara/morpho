@@ -14,8 +14,7 @@ Sovelluksen tarkoituksena on tarjota hupia ja hyötyä kiipeilyharrastukseen ant
 - reitin luominen
   - ylläpitäjä voi myös poistaa reitin
 - reittien selaaminen (sovelluksen edistyessä selailu voi monipuolistua erilaisin kriteerein ja tägein)
-- reitin arvostelu, oman arvostelun muokkaus ja poisto
-  - ylläpitäjä voi myös poistaa asiattomina pitämiään arvosteluja
+- reitin arvostelu, oman arvostelun muokkaus
 - suositusten haku
 
 Suosituksia muodostavaa järjestelmää voi kehittää varmasti loputtomasti, mutta aluksi lähdetään liikkeelle yksinkertaisesta konseptista.
