@@ -55,10 +55,10 @@ class Route(Base):
             user = current_user
             stmt = text("SELECT route_id, AVG(value) AS avg FROM "
 	                "(SELECT * from rating WHERE NOT route_id IN "
-	                "(SELECT rating.route_id from rating WHERE rating.account_id=:user_id) "
+	                "(SELECT rating.route_id from rating WHERE rating.account_id=:user_id)"
 	                "AND rater_height BETWEEN :height - 3 AND :height + 3 "
 	                "AND rater_weight BETWEEN :weight - 3 AND :weight + 3 "
-	                "AND rater_arm_span BETWEEN :arm_span - 3 AND :arm_span + 3) "
+	                "AND rater_arm_span BETWEEN :arm_span - 3 AND :arm_span + 3) AS matching_ratings "
 	                "GROUP BY route_id "
 	                "ORDER BY avg DESC "
 	                "LIMIT :how_many").params(
@@ -74,7 +74,7 @@ class Route(Base):
                     "GROUP BY route_id ORDER BY avg DESC LIMIT :how_many").params(
                         how_many = number_of_recommendations
                     )
-                    
+
         res = db.engine.execute(stmt)
 
         recommended_routes = []
