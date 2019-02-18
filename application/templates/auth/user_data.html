@@ -18,12 +18,14 @@
         </th>
       </tr>
     </thead>
+    {% if user.get_height() or user.get_weight() or user.get_arm_span() %}
     <tr>
       <th scope="row">Current</th>
       <td>{{ user.get_height() }} cm</td>
       <td>{{ user.get_weight() }} kg</td>
       <td>{{ user.get_arm_span() }} cm</td>
     </tr>
+    {% endif %}
     <tr>
       <th scope="row">New</th>
       <td class="narrow-input">{{ form.new_height }} cm</td>
