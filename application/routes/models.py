@@ -47,7 +47,7 @@ class Route(Base):
         if num != 0:
             avg = sum / num
 
-        return avg
+        return "{0:.2f}".format(avg)
 
     @staticmethod
     def create_recommendation(number_of_recommendations):
@@ -83,7 +83,7 @@ class Route(Base):
             route = Route.query.filter_by(id = row[0]).first()
             recommended_routes.append(route)
             average_rating = row[1]
-            average_ratings.append(average_rating)
+            average_ratings.append("{0:.2f}".format(average_rating))
         
         return recommended_routes, average_ratings
 
