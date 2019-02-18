@@ -3,29 +3,35 @@
 <h2>Your Anthropometric Data</h2>
 
 <form method="POST" action="{{ url_for('user_data') }}">
-  <table>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th></th>
+        <th scope="col">
+          Height
+        </th>
+        <th scope="col">
+          Weight
+        </th>
+        <th scope="col">
+          Arm span
+        </th>
+      </tr>
+    </thead>
     <tr>
-      <td>
-        Height
-      </td>
-      <td>
-        Weight
-      </td>
-      <td>
-        Arm span
-      </td>
-    </tr>
-    <tr>
+      <th scope="row">Current</th>
       <td>{{ user.get_height() }} cm</td>
       <td>{{ user.get_weight() }} kg</td>
       <td>{{ user.get_arm_span() }} cm</td>
     </tr>
     <tr>
-      <td>{{ form.new_height }} cm</td>
-      <td>{{ form.new_weight }} kg</td>
-      <td>{{ form.new_arm_span }} cm</td>
+      <th scope="row">New</th>
+      <td class="narrow-input">{{ form.new_height }} cm</td>
+      <td class="narrow-input">{{ form.new_weight }} kg</td>
+      <td class="narrow-input">{{ form.new_arm_span }} cm</td>
     </tr>
     <tr>
+      <td></td>
       <td>
         <ul>
           {% for error in form.new_height.errors %}

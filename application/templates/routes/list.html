@@ -1,38 +1,67 @@
-{% extends "layout.html" %}
-
-{% block body %}
-  <table>
-    <tr>
-      <th>Route</th>
-      <th>Grade</th>
-      <th>Average</th>
-      <th>Ratings</th>
-      <th></th>
-      <th></th>
-    </tr>
-    {% for route in routes %}
-    <tr>
-      <td>{{ route.name }}</td>
-      <td>{{ route.grade }}</td>
-      <td>{{ route.average_rating(route) }}</td>
-      <td>{{ route.number_of_ratings(route) }}</td>
-      <td>
-        <table><tr>
-          <form method="POST" action="{{ url_for('ratings_create', route_id=route.id ) }}">
-            {% for subfield in form.new_rating %}
-            <td>{{ subfield }}</td>
-            <td>{{ subfield.label }}</td>
-            {% endfor %}
-            <td><input type="submit" value="Rate"/></td>
+{% extends "layout.html" %} {% block body %}
+<h2>All routes</h2>
+<table class="table">
+  <tr>
+    <th>Route</th>
+    <th>Grade</th>
+    <th>Average</th>
+    <th>Ratings</th>
+    <th></th>
+  </tr>
+  {% for route in routes %}
+  <tr>
+    <th>{{ route.name }}</th>
+    <td>{{ route.grade }}</td>
+    <td>{{ route.average_rating(route) }}</td>
+    <td>{{ route.number_of_ratings(route) }}</td>
+    <td class="xl">
+        <form
+        method="POST"
+        action="{{ url_for('ratings_create', route_id=route.id ) }}"
+      >
+        {% for subfield in form.new_rating %}
+        {{ subfield.label }} {{ subfield }}
+        {% endfor %}
+        <button type="submit">Rate</button>
+      
+      </form>
+    </td>
+    <td class="xl">
+      {% if current_user.id == route.creator_account_id %}
+      <form
+        method="POST"
+        action="{{ url_for('routes_delete', route_id=route.id ) }}"
+      >
+        <input type="submit" value="Delete" />
+      </form>
+      {% endif %}
+    </td>
+  </tr>
+  <tr class="xs">
+      <td colspan="1">
+          {% if current_user.id == route.creator_account_id %}
+          <form
+            method="POST"
+            action="{{ url_for('routes_delete', route_id=route.id ) }}"
+          >
+            <input type="submit" value="Delete" />
           </form>
-        </tr></table>
+          {% endif %}
       </td>
-      <td>
-        <form method="POST" action="{{ url_for('routes_delete', route_id=route.id ) }}" >
-          <input type="submit" value="Delete" />
-        </form>
-      </td>
-    </tr>
-    {% endfor %}
-  </table>
+    <td colspan="3" class="rate">
+      <form
+        method="POST"
+        action="{{ url_for('ratings_create', route_id=route.id ) }}"
+      >
+        {% for subfield in form.new_rating %}
+        {{ subfield.label }} {{ subfield }}
+        {% endfor %}
+        <button type="submit">Rate</button>
+      
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
 {% endblock %}
