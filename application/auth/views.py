@@ -37,8 +37,12 @@ def users_create():
     
     if not form.validate():
         return render_template("auth/new.html", form = form)
-
-    user = User(form.username.data, form.password.data)
+    
+    username = form.username.data
+    if User.query.filter_by(username=username).first() is None:
+        user = User(username, form.password.data)
+    else:
+        return render_template("auth/new.html", form = NewUserForm())
 
     db.session().add(user)
     db.session().commit()
