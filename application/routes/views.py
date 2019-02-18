@@ -19,7 +19,7 @@ def routes_index():
 @app.route("/routes/new/")
 @login_required
 def routes_form():
-    return render_template("routes/new.html", form = RouteForm())
+    return render_template("routes/new.html", form = RouteForm(), message = "")
 
 @app.route("/<route_id>/delete/", methods=["POST"])
 @login_required
@@ -38,7 +38,12 @@ def routes_create():
     if not form.validate():
         return render_template("routes/new.html", form = form)
 
-    route = Route(form.name.data, form.grade.data)
+    route_name = form.name.data
+    if Route.query.filter_by(name=route_name).first() is None:
+        route = Route(route_name, form.grade.data)
+    else:
+        return render_template("routes/new.html", form = RouteForm(), message = "A route with this name exists already.")
+
     route.creator_account_id = current_user.id
 
     db.session().add(route)

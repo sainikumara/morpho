@@ -11,13 +11,6 @@
         {{ form.name }}
       </td>
       <td>
-        <ul>
-          {% for error in form.name.errors %}
-            <li>{{ error }}</li>
-          {% endfor %}
-        </ul>
-      </td>
-      <td>
         {{ form.grade.label }}
       </td>
       <td>
@@ -25,7 +18,20 @@
       </td>
     </tr>
     <tr>
-      <td colspan="5">
+        <td></td>
+        <td>
+          {{ message }}
+          <ul>
+            {% for error in form.name.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </td>
+        <td></td>
+        <td></td>
+      </tr>
+    <tr>
+      <td colspan="4">
         <input type="submit" value="Add a new route" />
       </td>
     </tr>
