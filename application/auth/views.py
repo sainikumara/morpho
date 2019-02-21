@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for
-from flask_login import login_user, logout_user, login_required, current_user
+from flask_login import login_user, logout_user, current_user
 
-from application import app, db
+from application import app, db, login_required
 from application.auth.models import User
 from application.auth.forms import LoginForm, NewUserForm, UserDataForm
 
@@ -44,13 +44,20 @@ def users_create():
     else:
         return render_template("auth/new.html", form = NewUserForm(), message = "This username is already taken")
 
+    users_in_database = User.query.order_by(User.username).all()
+
+    if users_in_database:
+        user.role = "DEFAULT"
+    else:
+        user.role = "ADMIN"
+
     db.session().add(user)
     db.session().commit()
 
     return redirect(url_for("auth_login"))
 
 @app.route("/user_data/", methods=["GET", "POST"])
-@login_required
+@login_required()
 def user_data():
     if request.method == "GET":
         return render_template("auth/user_data.html", form = UserDataForm(), user=current_user)
@@ -77,3 +84,40 @@ def user_data():
     db.session().commit()
 
     return redirect(url_for("routes_index"))
+
+@app.route("/users/", methods=["GET"])
+@login_required(role="ADMIN")
+def users_index():
+    users_to_show = User.query.order_by(User.username).all()
+
+    return render_template("auth/list.html", users = users_to_show)
+
+@app.route("/users/<user_id>/role", methods=["POST"])
+@login_required(role="ADMIN")
+def change_role(user_id):
+
+    user = User.query.filter_by(id=user_id).first()
+
+    if user.role == "ADMIN":
+        user.role = "DEFAULT"
+        if user == current_user:
+            db.session().commit()
+            return redirect(url_for("index"))
+    else:
+        user.role = "ADMIN"
+
+    db.session().commit()
+
+    return redirect(url_for("users_index"))
+
+@app.route("/users/<user_id>/delete/", methods=["POST"])
+@login_required(role="ADMIN")
+def users_delete(user_id):
+    user = User.query.filter_by(id=user_id).first()
+
+    if user.role != "ADMIN":
+        User.query.filter_by(id=user_id).delete()
+
+    db.session().commit()
+
+    return redirect(url_for("users_index"))

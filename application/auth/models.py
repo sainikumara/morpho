@@ -11,6 +11,8 @@ class User(Base):
     username = db.Column(db.String(64), unique=True, nullable=False)
     _password = db.Column(db.String(128), nullable=False)
 
+    role = db.Column(db.String(10), nullable=False)
+
     height = db.Column(db.Integer, nullable=True)
     weight = db.Column(db.Integer, nullable=True)
     arm_span = db.Column(db.Integer, nullable=True)
@@ -62,3 +64,9 @@ class User(Base):
 
     def get_arm_span(self):
         return self.arm_span
+
+    def roles(self):
+        if self.role == "ADMIN":
+            return ["ADMIN"]
+        else:
+            return ["DEFAULT"]

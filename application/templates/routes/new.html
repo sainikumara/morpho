@@ -1,8 +1,10 @@
 {% extends "layout.html" %} {% block body %}
 <h2>Add a new route</h2>
-{{ message }}
+
 <form method="POST" action="{{ url_for('routes_create') }}" class="small-form">
   <div class="form-group small-form">
+    {{ message }}
+    <br />
     {% if form.name.errors %}
     <ul>
       {% for error in form.name.errors %}

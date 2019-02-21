@@ -1,0 +1,39 @@
+{% extends "layout.html" %} {% block body %}
+<h2>All users</h2>
+<p class="centered"><strong>Note that admins can't be deleted</strong></p>
+<table class="table">
+  <tr>
+    <th>Username</th>
+    <th>Time of creation</th>
+    <th></th>
+    <th></th>
+  </tr>
+  {% for user in users %}
+  <tr>
+    <th>{{ user.username }}</th>
+    <td>{{ user.date_created }}</td>
+    <td>
+      <form
+        method="POST"
+        action="{{ url_for('change_role', user_id=user.id ) }}"
+      >
+        {% if user.role != "ADMIN" %}
+        <button type="submit">Make admin</button>
+        {% else %}
+        <button type="submit">Revoke admin status</button>
+        {% endif %}
+      </form>
+    </td>
+    <td>
+      <form
+        method="POST"
+        action="{{ url_for('users_delete', user_id=user.id ) }}"
+      >
+        <input type="submit" value="Delete" />
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}

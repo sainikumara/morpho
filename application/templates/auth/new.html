@@ -1,8 +1,10 @@
 {% extends "layout.html" %} {% block body %}
 <h2>Create a username and password</h2>
-{{ message }}
+
 <form method="POST" action="{{ url_for('users_create') }}" class="small-form">
   <div class="form-group">
+    {{ message }}
+    <br />
     {{ form.username.label }}
     {{ form.username }}
 
