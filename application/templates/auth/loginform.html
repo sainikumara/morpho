@@ -1,8 +1,9 @@
 {% extends "layout.html" %} {% block body %}
 <h2>Login</h2>
-{{ error }}
 <form method="POST" action="{{ url_for('auth_login') }}" class="small-form">
   <div class="form-group">
+    {{ error }}
+    <br />
     {{ form.username.label }}
     {{ form.username }}
     <br />
