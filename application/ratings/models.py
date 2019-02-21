@@ -11,7 +11,7 @@ class Rating(Base):
     rater_arm_span = db.Column(db.Integer, nullable=True)
 
     route_id = db.Column(db.Integer, db.ForeignKey('route.id'), nullable=False)
-    account_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
+    account_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=True)
 
     def __init__(self, value, route):
         self.value = value

@@ -10,7 +10,7 @@ class Route(Base):
     grade = db.Column(db.String(2), nullable=False)
 
     creator_account_id = db.Column(db.Integer, db.ForeignKey('account.id'),
-                           nullable=False)
+                           nullable=True)
     
     ratings = db.relationship("Rating", backref='route', lazy=True)
 
