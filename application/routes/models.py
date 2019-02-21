@@ -110,29 +110,3 @@ class Route(Base):
             routes_rated.append(Route.query.filter_by(id = id).first())
         
         return routes_rated
-
-    @staticmethod
-    def find_routes_user_has_not_rated():
-        stmt = text("SELECT Route.id FROM Rating"
-                     " LEFT JOIN Route ON Rating.route_id = Route.id"
-                     " WHERE NOT (Rating.account_id = :user_id)"
-                     " ORDER BY Route.grade").params(user_id = current_user.id)
-        res = db.engine.execute(stmt)
-
-        print("TULOSTELUAIKA")
-        
-        ids_of_routes_not_rated = []
-        for row in res:
-            ids_of_routes_not_rated.append(int(row[0]))
-            print(row[0])
-
-        return ids_of_routes_not_rated
-
-    # def routes_user_has_not_rated(self):
-    #     ids = self.find_routes_user_has_not_rated()
-
-    #     routes_not_rated = []
-    #     for id_of_route in ids:
-    #         routes_not_rated.append(Route.query.filter_by((id = id_of_route)).first())
-        
-    #     return routes_not_rated
