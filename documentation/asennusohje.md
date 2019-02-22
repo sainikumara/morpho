@@ -16,7 +16,7 @@ $ python3 -m venv venv
 $ source venv/bin/activate
 ```
 
-3. Asenna Flask-kirjasto käyttäen pip-versionhallintaa:
+3. Asenna Flask-kirjasto käyttäen pip-pakettimanageria:
 ```
 $ pip install Flask
 ```
