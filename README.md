@@ -8,19 +8,22 @@ Sovellus on käytettävissä Heroku-palvelussa, osoitteessa https://morphoapp.he
 Sovelluksen tarkoituksena on tarjota hupia ja hyötyä kiipeilyharrastukseen antamalla käyttäjälle suosituksia reiteistä, jotka voisivat olla juuri hänestä kivoja. Sovellus perustaa suosituksensa käyttäjän kokoon ja ruumiinrakenteeseen sekä muiden, kooltaan ja ruumiinrakenteeltaan samankaltaisten, käyttäjien tekemiin arvosteluihin.
 
 ## Toimintoja
-- käyttäjätilin luominen ja poistaminen
+- käyttäjätilin luominen
+  - ylläpitäjä voi myös poistaa käyttäjiä, jotka eivät ole ylläpitäjiä ja antaa ja poistaa ylläpito-oikeuksia
 - kirjautuminen sisään ja ulos
-- omien mittojen muokkaus
+- omien mittojen lisääminen ja muokkaus
 - reitin luominen
-  - ylläpitäjä voi myös poistaa reitin
-- reittien selaaminen (sovelluksen edistyessä selailu voi monipuolistua erilaisin kriteerein ja tägein)
+  - ylläpitäjä ja reitin luoja voivat myös poistaa reitin
+- reittien selaaminen
 - reitin arvostelu, oman arvostelun muokkaus
 - suositusten haku
 
 Suosituksia muodostavaa järjestelmää voi kehittää varmasti loputtomasti, mutta aluksi lähdetään liikkeelle yksinkertaisesta konseptista.
 
-## User storyt
-User storyja on kerätty erilliseen [User stories -dokumenttiin](https://github.com/sainikumara/morpho/blob/master/documentation/userstories.md).
+## Dokumentaatio
+[User stories](https://github.com/sainikumara/morpho/blob/master/documentation/userstories.md)
+[Käyttöohje](https://github.com/sainikumara/morpho/blob/master/documentation/kayttoohje.md)
+[Asennusohje](https://github.com/sainikumara/morpho/blob/master/documentation/asennusohje.md)
 
 ## Tietokantakaavio
 ![alt text](https://github.com/sainikumara/morpho/blob/master/documentation/tietokantakaavio.png "Tietokantakaavio")
