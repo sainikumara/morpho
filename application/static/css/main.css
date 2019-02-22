@@ -3,8 +3,8 @@
 .table td.xl                        { display: none; }
 .table tr.xs td                     { padding-top: 0; padding-bottom: 1rem; text-align: left; }
 table td.narrow-input input         { max-width: 50px; }
-@media only screen and (min-width: 800px) {
-  .table                            { width: 800px; margin-left: auto; margin-right: auto; }
+@media only screen and (min-width: 900px) {
+  .table                            { width: 900px; margin-left: auto; margin-right: auto; }
   .table td.xl                      { display: inline-block; }
   .table tr.xs                      { display: none; }
 }
