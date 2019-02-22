@@ -16,26 +16,21 @@ $ python3 -m venv venv
 $ source venv/bin/activate
 ```
 
-3. Asenna Flask-kirjasto käyttäen pip-pakettimanageria:
-```
-$ pip install Flask
-```
-
-4. Asenna sovelluksen riippuvuudet:
+3. Asenna sovelluksen riippuvuudet käyttäen pip-pakettimanageria:
 ```
 $ pip install -r requirements.txt
 ```
 
-5. Nyt sovelluksen voi käynnistää:
+4. Nyt sovelluksen voi käynnistää:
 ```
 $ python3 run.py
 ```
 
-6. Avaa selain osoitteessa http://localhost:5000/
+5. Avaa selain osoitteessa http://localhost:5000/
 
-7. Voit nyt käyttää sovellusta paikallisessa verkkoympäristössä. Syöttämäsi tiedot tallentuvat omalla koneellasi sqlite-tietokantaan.
+6. Voit nyt käyttää sovellusta paikallisessa verkkoympäristössä. Syöttämäsi tiedot tallentuvat omalla koneellasi sqlite-tietokantaan.
 
-8. Ensimmäinen luotu käyttäjätunnus saa automaattisesti admin-oikeudet sovellukseen
+7. Ensimmäinen luotu käyttäjätunnus saa automaattisesti admin-oikeudet sovellukseen
 
 
 ## Sovelluksen asentaminen Herokuun
