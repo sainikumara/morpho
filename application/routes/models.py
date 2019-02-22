@@ -4,6 +4,7 @@ from application.models import Base
 from flask_login import current_user
 
 from sqlalchemy.sql import text
+from application.ratings.models import Rating
 
 class Route(Base):
     name = db.Column(db.String(144), nullable=False)
@@ -38,12 +39,20 @@ class Route(Base):
                     params(route_to_find = self.id)
         res = db.engine.execute(stmt)
 
-        avg = 0
         for row in res:
             if row[0]:
                 avg = row[0]
+                return "{0:.2f}".format(avg)
+        
+        return ""
 
-        return "{0:.2f}".format(avg)
+    def own_rating(self):
+        rating = Rating.query.filter_by(route_id = self.id, account_id = current_user.id).first()
+
+        if rating:
+            return rating.value
+        else:
+            return ""
 
     @staticmethod
     def create_recommendation(number_of_recommendations):

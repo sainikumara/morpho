@@ -6,6 +6,10 @@
     <th>Grade</th>
     <th>Average</th>
     <th>Ratings</th>
+    {% if current_user.is_authenticated %}
+    <th>You Rated</th>
+    {% endif %}
+    <th></th>
     <th></th>
   </tr>
   {% for route in routes %}
@@ -14,6 +18,9 @@
     <td>{{ route.grade }}</td>
     <td>{{ route.average_rating(route) }}</td>
     <td>{{ route.number_of_ratings(route) }}</td>
+    {% if current_user.is_authenticated %}
+    <td>{{ route.own_rating() }}</td>
+    {% endif %}
     <td class="xl">
         <form
         method="POST"
@@ -27,7 +34,7 @@
       </form>
     </td>
     <td class="xl">
-      {% if current_user.id == route.creator_account_id %}
+      {% if current_user.id == route.creator_account_id or current_user.role == "ADMIN" %}
       <form
         method="POST"
         action="{{ url_for('routes_delete', route_id=route.id ) }}"
@@ -39,7 +46,7 @@
   </tr>
   <tr class="xs">
       <td colspan="1">
-          {% if current_user.id == route.creator_account_id %}
+          {% if current_user.id == route.creator_account_id or current_user.role == "ADMIN" %}
           <form
             method="POST"
             action="{{ url_for('routes_delete', route_id=route.id ) }}"
