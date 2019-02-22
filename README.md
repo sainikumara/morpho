@@ -22,7 +22,9 @@ Suosituksia muodostavaa järjestelmää voi kehittää varmasti loputtomasti, mu
 
 ## Dokumentaatio
 [User stories](https://github.com/sainikumara/morpho/blob/master/documentation/userstories.md)
+
 [Käyttöohje](https://github.com/sainikumara/morpho/blob/master/documentation/kayttoohje.md)
+
 [Asennusohje](https://github.com/sainikumara/morpho/blob/master/documentation/asennusohje.md)
 
 ## Tietokantakaavio
