@@ -28,7 +28,7 @@ Login-sivulla on tekstikenttä käyttäjänimelle ja toinen salasanalle. Jos ne 
 
 ## Kaikkien reittien listaus
 
-List routes -sivulla on nimensä mukaisesti listattu kaikki sovellukseen syötetyt reitit, niiden greidit, arvostelujen keskiarvot ja lukumäärät. Kaikille käyttäjille näkyy näiden lisäksi **mahdollisuus antaa kullekin reitille arvosana välillä 1-5**, mutta jos kirjautumaton käyttäjä yrittää lähettää arvionsa, ohjataan hänet kirjautumissivulle.
+List routes -sivulla on nimensä mukaisesti listattu kaikki sovellukseen syötetyt reitit, niiden greidit, arvostelujen keskiarvot ja lukumäärät. Kaikille käyttäjille näkyy näiden lisäksi **mahdollisuus antaa kullekin reitille arvosana välillä 1-5**, mutta jos kirjautumaton käyttäjä yrittää lähettää arvionsa, ohjataan hänet kirjautumissivulle. Arvosanan antamisen yhteydessä tallentuvat käyttäjän senhetkiset mitat, joten arvosanojen perusteella muodostettavat suositukset pysyvät relevantteina tietynkokoiselle käyttäjälle, vaikka arvosanan antajan mitat muuttuisivat.
 
 Kirjautuneelle käyttäjälle näkyy edellisten lisäksi omassa sarakkeessaan hänen itse antamansa arvosana kullekin reitille.
 
