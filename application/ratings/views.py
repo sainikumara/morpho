@@ -14,19 +14,19 @@ def ratings_index():
 @login_required
 def ratings_create(route_id):
     form = RatingForm(request.form)
+    if form.validate():
+        rating = Rating.query.filter_by(account_id=current_user.id).filter_by(route_id=route_id).first()
 
-    rating = Rating.query.filter_by(account_id=current_user.id).filter_by(route_id=route_id).first()
+        if rating is None:
+            rating = Rating(int(form.new_rating.data), int(route_id))
+            rating.account_id = current_user.id
+            rating.set_rater_data(current_user.height, current_user.weight, current_user.arm_span)
+            db.session().add(rating)
+        else:
+            rating._set_rating_value(int(form.new_rating.data))
+            rating.set_rater_data(current_user.height, current_user.weight, current_user.arm_span)
 
-    if rating is None:
-        rating = Rating(int(form.new_rating.data), int(route_id))
-        rating.account_id = current_user.id
-        rating.set_rater_data(current_user.height, current_user.weight, current_user.arm_span)
-        db.session().add(rating)
-    else:
-        rating._set_rating_value(int(form.new_rating.data))
-        rating.set_rater_data(current_user.height, current_user.weight, current_user.arm_span)
-
-    db.session().commit()
+        db.session().commit()
 
     return redirect(url_for("routes_index"))
     
