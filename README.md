@@ -21,11 +21,9 @@ Sovelluksen tarkoituksena on tarjota hupia ja hyötyä kiipeilyharrastukseen ant
 Suosituksia muodostavaa järjestelmää voi kehittää varmasti loputtomasti, mutta aluksi lähdetään liikkeelle yksinkertaisesta konseptista.
 
 ## Dokumentaatio
-[User stories](https://github.com/sainikumara/morpho/blob/master/documentation/userstories.md)
-
-[Käyttöohje](https://github.com/sainikumara/morpho/blob/master/documentation/kayttoohje.md)
-
-[Asennusohje](https://github.com/sainikumara/morpho/blob/master/documentation/asennusohje.md)
+- [User stories](https://github.com/sainikumara/morpho/blob/master/documentation/userstories.md)
+- [Käyttöohje](https://github.com/sainikumara/morpho/blob/master/documentation/kayttoohje.md)
+- [Asennusohje](https://github.com/sainikumara/morpho/blob/master/documentation/asennusohje.md)
 
 ## Tietokantakaavio
 ![alt text](https://github.com/sainikumara/morpho/blob/master/documentation/tietokantakaavio.png "Tietokantakaavio")
