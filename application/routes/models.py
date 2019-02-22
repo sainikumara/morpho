@@ -33,19 +33,15 @@ class Route(Base):
 
     @staticmethod
     def average_rating(self):
-        stmt = text("SELECT Rating.value FROM Rating"
-                    " WHERE Rating.route_id = :route_to_find;").\
+        stmt = text("SELECT AVG(value) FROM Rating"
+                    " WHERE route_id = :route_to_find;").\
                     params(route_to_find = self.id)
         res = db.engine.execute(stmt)
 
-        sum = 0
-        for row in res:
-            sum += int(row[0])
-        
         avg = 0
-        num = self.number_of_ratings(self)
-        if num != 0:
-            avg = sum / num
+        for row in res:
+            if row[0]:
+                avg = row[0]
 
         return "{0:.2f}".format(avg)
 
