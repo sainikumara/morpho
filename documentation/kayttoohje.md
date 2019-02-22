@@ -1,5 +1,7 @@
 # Käyttöohje
 
+Sovellus on tarkoitettu kiipeilijöille huviksi ja hyödyksi. Sen avulla kiipeilijät voivat löytää kiivettäväkseen reittejä, jotka muut ruumiinrakenteeltaan samankaltaiset kiipeilijät ovat kokeneet mielekkäiksi.
+
 Sovellusta voi tällä hetkellä käyttää osoitteessa https://morphoapp.herokuapp.com. Lisäksi sen voi asentaa [asennusohjeen](https://github.com/sainikumara/morpho/blob/master/documentation/asennusohje.md) mukaisesti ja käyttää paikallisesti tai asentaa Herokuun itse.
 
 
@@ -28,7 +30,7 @@ List routes -sivulla on nimensä mukaisesti listattu kaikki sovellukseen syötet
 
 Kirjautuneelle käyttäjälle näkyy edellisten lisäksi omassa sarakkeessaan hänen itse antamansa arvosana kullekin reitille.
 
-Admin-oikeuksin varustetulle käyttäjälle ja reitin luojalle näkyy myös mahdollisuus **poistaa reitti** halutessaan kokonaan sovelluksesta.
+Ylläpito-oikeuksin varustetulle käyttäjälle ja reitin luojalle näkyy myös mahdollisuus **poistaa reitti** halutessaan kokonaan sovelluksesta.
 
 
 ## Reitin lisääminen sovellukseen
@@ -43,4 +45,4 @@ Anthropometry-sivulla rekisteröitynyt käyttäjä näkee mahdollisesti aiemmin 
 
 ## Käyttäjien hallinta
 
-Admin-oikeuksin varustettu käyttäjä näkee yläpalkissa myös linkin Manage Users -sivulle, jolla on listattu kaikki sovelluksen käyttäjät ja heidän liittymispäivänsä. Tällä sivulla **admin voi jakaa ja poistaa admin-oikeuksia** ja halutessaan **poistaa käyttäjän** sovelluksesta kokonaan.
+Ylläpito-(eli admin)oikeuksin varustettu käyttäjä näkee yläpalkissa myös linkin Manage Users -sivulle, jolla on listattu kaikki sovelluksen käyttäjät ja heidän liittymispäivänsä. Tällä sivulla **ylläpitäjä voi jakaa ja poistaa ylläpito-oikeuksia** ja halutessaan **poistaa ei-ylläpitäjä -käyttäjän** sovelluksesta kokonaan.
