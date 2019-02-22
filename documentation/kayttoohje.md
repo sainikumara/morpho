@@ -14,7 +14,7 @@ Etusivulle pääsee miltä tahansa muulta sivulta klikkaamalla sovelluksen nime�
 
 ## Rekisteröityminen
 
-Sign up -sivulla on yksi tekstikenttä käyttäjänimen syöttämiseen ja toinen salasanan. Käyttäjänimen on oltava uniikki, joten käyttäjä näkee virheilmoituksen, jos yrittää rekisteröidä jo käytössä olevan tunnuksen.
+Sign up -sivulla on yksi tekstikenttä käyttäjänimen syöttämiseen ja toinen salasanan. Käyttäjänimen on oltava uniikki, joten käyttäjä näkee virheilmoituksen, jos yrittää rekisteröidä jo käytössä olevan tunnuksen. Rekisteröitymisen jälkeen käyttäjä ohjataan kirjautumissivulle.
 
 
 ## Kirjautuminen
