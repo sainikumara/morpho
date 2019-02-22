@@ -23,6 +23,8 @@ Sign up -sivulla on yksi tekstikenttä käyttäjänimen syöttämiseen ja toinen
 
 Login-sivulla on tekstikenttä käyttäjänimelle ja toinen salasanalle. Jos ne eivät täsmää tietokannasta löytyvien kanssa, käyttäjä näkee virheilmoituksen.
 
+*Ylläpitäjälle rajattuja ominaisuuksia pääsee kokeilemaan Herokussa tällä hetkellä (22.2.2019) pyörivässä sovelluksessa tunnuksella apina ja salasanalla banaani.*
+
 
 ## Kaikkien reittien listaus
 
