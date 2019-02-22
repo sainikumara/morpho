@@ -9,7 +9,7 @@ Sovelluksen tarkoituksena on tarjota hupia ja hyötyä kiipeilyharrastukseen ant
 
 ## Toimintoja
 - käyttäjätilin luominen
-  - ylläpitäjä voi myös poistaa käyttäjiä, jotka eivät ole ylläpitäjiä ja antaa ja poistaa ylläpito-oikeuksia
+  - ylläpitäjä voi myös poistaa käyttäjiä, jotka eivät ole ylläpitäjiä, ja antaa ja poistaa ylläpito-oikeuksia
 - kirjautuminen sisään ja ulos
 - omien mittojen lisääminen ja muokkaus
 - reitin luominen
