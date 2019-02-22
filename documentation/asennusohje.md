@@ -26,7 +26,7 @@ $ pip install Flask
 $ pip install -r requirements.txt
 ```
 
-5. Nyt sovellusksen voi käynnistää:
+5. Nyt sovelluksen voi käynnistää:
 ```
 $ python3 run.py
 ```
