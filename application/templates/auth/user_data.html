@@ -1,66 +1,78 @@
 {% extends "layout.html" %} {% block body %}
 
 <h2>Your Anthropometric Data</h2>
+<div id="user-data-form">
+  <div class="user-data-item" id="height-form">
+    <form form method="POST" action="{{ url_for('user_height') }}">
+      <div class="form-header">Height</div>
+      {% if user.get_height() %}
+      <div>Current height: {{ user.get_height() }} cm</div>
+      {% endif %}
+      <div>{{ height_form.new_height }} cm</div>
+      <div>
+        <ul>
+          {% for error in height_form.new_height.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div>
+        {% if user.get_height() %}
+        <button type="submit">Change height</button>
+        {% else %}
+        <button type="submit">Add height</button>
+        {% endif %}
+      </div>
+    </form>
+  </div>
 
-<form method="POST" action="{{ url_for('user_data') }}">
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th></th>
-        <th scope="col">
-          Height
-        </th>
-        <th scope="col">
-          Weight
-        </th>
-        <th scope="col">
-          Arm span
-        </th>
-      </tr>
-    </thead>
-    {% if user.get_height() or user.get_weight() or user.get_arm_span() %}
-    <tr>
-      <th scope="row">Current</th>
-      <td>{{ user.get_height() }} cm</td>
-      <td>{{ user.get_weight() }} kg</td>
-      <td>{{ user.get_arm_span() }} cm</td>
-    </tr>
-    {% endif %}
-    <tr>
-      <th scope="row">New</th>
-      <td class="narrow-input">{{ form.new_height }} cm</td>
-      <td class="narrow-input">{{ form.new_weight }} kg</td>
-      <td class="narrow-input">{{ form.new_arm_span }} cm</td>
-    </tr>
-    <tr>
-      <td></td>
-      <td>
+  <div class="user-data-item" id="weight-form">
+    <form form method="POST" action="{{ url_for('user_weight') }}">
+      <div class="form-header">Weight</div>
+      {% if user.get_weight() %}
+      <div>Current weight: {{ user.get_weight() }} kg</div>
+      {% endif %}
+      <div>{{ weight_form.new_weight }} kg</div>
+      <div>
         <ul>
-          {% for error in form.new_height.errors %}
+          {% for error in weight_form.new_weight.errors %}
           <li>{{ error }}</li>
           {% endfor %}
         </ul>
-      </td>
-      <td>
+      </div>
+      <div>
+        {% if user.get_weight() %}
+        <button type="submit">Change weight</button>
+        {% else %}
+        <button type="submit">Add weight</button>
+        {% endif %}
+      </div>
+    </form>
+  </div>
+
+  <div class="user-data-item" id="arm-span-form">
+    <form form method="POST" action="{{ url_for('user_arm_span') }}">
+      <div class="form-header">Arm span</div>
+      {% if user.get_arm_span() %}
+      <div>Current arm span: {{ user.get_arm_span() }} cm</div>
+      {% endif %}
+      <div>{{ arm_span_form.new_arm_span }} cm</div>
+      <div>
         <ul>
-          {% for error in form.new_weight.errors %}
+          {% for error in arm_span_form.new_arm_span.errors %}
           <li>{{ error }}</li>
           {% endfor %}
         </ul>
-      </td>
-      <td>
-        <ul>
-          {% for error in form.new_arm_span.errors %}
-          <li>{{ error }}</li>
-          {% endfor %}
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="6">
-        <input type="submit" value="Change" />
-      </td>
-    </tr>
-  </table>
-</form>
+      </div>
+      <div>
+        {% if user.get_arm_span() %}
+        <button type="submit">Change arm span</button>
+        {% else %}
+        <button type="submit">Add arm span</button>
+        {% endif %}
+      </div>
+    </form>
+  </div>
+</div>
+
 {% endblock %}

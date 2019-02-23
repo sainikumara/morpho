@@ -15,9 +15,19 @@ class NewUserForm(FlaskForm):
     class Meta:
         csrf = False
 
-class UserDataForm(FlaskForm):
+class UserHeightForm(FlaskForm):
     new_height = IntegerField("Height", [validators.NumberRange(min=40, max=300)])
+
+    class Meta:
+        csrf = False
+
+class UserWeightForm(FlaskForm):
     new_weight = IntegerField("Weight", [validators.NumberRange(min=10, max=300)])
+
+    class Meta:
+        csrf = False
+
+class UserArmSpanForm(FlaskForm):
     new_arm_span = IntegerField("Arm Span", [validators.NumberRange(min=40, max=300)])
 
     class Meta:

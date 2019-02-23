@@ -3,7 +3,7 @@ from flask_login import login_user, logout_user, current_user
 
 from application import app, db, login_required
 from application.auth.models import User
-from application.auth.forms import LoginForm, NewUserForm, UserDataForm
+from application.auth.forms import LoginForm, NewUserForm, UserHeightForm, UserWeightForm, UserArmSpanForm
 
 @app.route("/auth/login", methods = ["GET", "POST"])
 def auth_login():
@@ -56,26 +56,75 @@ def users_create():
 
     return redirect(url_for("auth_login"))
 
-@app.route("/user_data/", methods=["GET", "POST"])
+@app.route("/user_data/", methods=["GET"])
 @login_required()
 def user_data():
-    if request.method == "GET":
-        return render_template("auth/user_data.html", form = UserDataForm(), user=current_user)
+    return render_template("auth/user_data.html",
+        height_form = UserHeightForm(),
+        weight_form = UserWeightForm(),
+        arm_span_form = UserArmSpanForm(),
+        user=current_user)
 
-    form = UserDataForm(request.form)
+@app.route("/user_data/height/", methods=["POST"])
+@login_required()
+def user_height():
+
+    form = UserHeightForm(request.form)
 
     if not form.validate():
-        return render_template("auth/user_data.html", form = form, user=current_user)
+        return render_template("auth/user_data.html",
+            height_form = form,
+            weight_form = UserWeightForm(),
+            arm_span_form = UserArmSpanForm(),
+            user = current_user)
 
     user = current_user
 
     height = form.new_height.data
     if isinstance(height, int):
         user._set_height(height)
+
+    db.session().commit()
+
+    return redirect(url_for("user_data"))
+
+@app.route("/user_data/weight/", methods=["POST"])
+@login_required()
+def user_weight():
+
+    form = UserWeightForm(request.form)
+
+    if not form.validate():
+        return render_template("auth/user_data.html",
+            height_form = UserHeightForm(),
+            weight_form = form,
+            arm_span_form = UserArmSpanForm(),
+            user = current_user)
+
+    user = current_user
     
     weight = form.new_weight.data
     if isinstance(weight, int):
         user._set_weight(weight)
+
+    db.session().commit()
+
+    return redirect(url_for("user_data"))
+
+@app.route("/user_data/arm_span/", methods=["POST"])
+@login_required()
+def user_arm_span():
+
+    form = UserArmSpanForm(request.form)
+
+    if not form.validate():
+        return render_template("auth/user_data.html",
+            height_form = UserHeightForm(),
+            weight_form = UserWeightForm(),
+            arm_span_form = form,
+            user = current_user)
+
+    user = current_user
     
     arm_span = form.new_arm_span.data
     if isinstance(arm_span, int):
@@ -83,7 +132,7 @@ def user_data():
 
     db.session().commit()
 
-    return redirect(url_for("routes_index"))
+    return redirect(url_for("user_data"))
 
 @app.route("/users/", methods=["GET"])
 @login_required(role="ADMIN")
