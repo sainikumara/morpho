@@ -1,7 +1,7 @@
 {% extends "layout.html" %} {% block body %}
 
 <h2>Your Anthropometric Data</h2>
-<div id="user-data-form">
+<div id="user-data-form" class="form-wrapper">
   <div class="user-data-item" id="height-form">
     <form form method="POST" action="{{ url_for('user_height') }}">
       <div class="form-header">Height</div>

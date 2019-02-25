@@ -39,7 +39,7 @@
         method="POST"
         action="{{ url_for('routes_delete', route_id=route.id ) }}"
       >
-        <input type="submit" value="Delete" />
+        <button type="submit">Delete</button>
       </form>
       {% endif %}
     </td>
@@ -51,7 +51,7 @@
             method="POST"
             action="{{ url_for('routes_delete', route_id=route.id ) }}"
           >
-            <input type="submit" value="Delete" />
+            <button type="submit">Delete</button>
           </form>
           {% endif %}
       </td>

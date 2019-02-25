@@ -5,7 +5,7 @@
   <tr>
     <th>Username</th>
     <th>Time of creation</th>
-    <th></th>
+    <th>Admin status</th>
     <th></th>
   </tr>
   {% for user in users %}
@@ -18,9 +18,9 @@
         action="{{ url_for('change_role', user_id=user.id ) }}"
       >
         {% if user.role != "ADMIN" %}
-        <button type="submit">Make admin</button>
+        <button type="submit">Give</button>
         {% else %}
-        <button type="submit">Revoke admin status</button>
+        <button type="submit">Take</button>
         {% endif %}
       </form>
     </td>
@@ -29,7 +29,7 @@
         method="POST"
         action="{{ url_for('users_delete', user_id=user.id ) }}"
       >
-        <input type="submit" value="Delete" />
+        <button type="submit">Delete</button>
       </form>
     </td>
   </tr>
