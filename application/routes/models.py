@@ -1,8 +1,6 @@
 from application import db
 from application.models import Base
 
-from flask_login import current_user
-
 from sqlalchemy.sql import text
 from application.ratings.models import Rating
 
@@ -18,7 +16,6 @@ class Route(Base):
     def __init__(self, name, grade):
         self.name = name
         self.grade = grade
-
 
     @staticmethod
     def number_of_ratings(self):
@@ -95,15 +92,17 @@ class Route(Base):
             message = "Log in and keep your anthropometric data up to date in order to get results relevant to you"
 
         res = db.engine.execute(stmt)
-
-        if user.is_authenticated and not res.fetchall():
+        result = res.fetchall()
+        
+        if user.is_authenticated and result == []:
             message = "Results are based on ratings given by other users, but there isn't enough data yet to make it anthropometrically relevant to you"
             stmt = self.create_generic_recommendation(number_of_recommendations)
             res = db.engine.execute(stmt)
+            result = res.fetchall()
 
         recommended_routes = []
         average_ratings = []
-        for row in res:
+        for row in result:
             route = Route.query.filter_by(id = row[0]).first()
             recommended_routes.append(route)
             average_rating = row[1]
