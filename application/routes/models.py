@@ -46,13 +46,19 @@ class Route(Base):
         
         return ""
 
-    def own_rating(self):
-        rating = Rating.query.filter_by(route_id = self.id, account_id = current_user.id).first()
+    def own_rating_value(self, user):
+        rating = Rating.query.filter_by(route_id = self.id, account_id = user.id).first()
 
         if rating:
             return rating.value
         else:
             return ""
+
+    def own_rating_id(self, user):
+        rating = Rating.query.filter_by(route_id = self.id, account_id = user.id).first()
+
+        if rating:
+            return rating.id
 
     @staticmethod
     def create_generic_recommendation(number_of_recommendations):

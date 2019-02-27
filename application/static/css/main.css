@@ -72,6 +72,9 @@ input:focus, select:focus {
     outline: none;
     border-color: #09ded4;
 }
+input[type=radio] {
+    margin-right: 20px;
+}
 
 /* tables */
 .table {
@@ -96,9 +99,6 @@ input:focus, select:focus {
   }
   .table td.xl {
     display: inline-block;
-  }
-  .table tr.xs {
-    display: none;
   }
 }
 .table td,

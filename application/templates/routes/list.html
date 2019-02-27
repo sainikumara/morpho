@@ -19,43 +19,22 @@
     <td>{{ route.average_rating(route) }}</td>
     <td>{{ route.number_of_ratings(route) }}</td>
     {% if current_user.is_authenticated %}
-    <td>{{ route.own_rating() }}</td>
+    <td>{{ route.own_rating_value(current_user) }}</td>
     {% endif %}
-    <td class="xl">
-        <form
-        method="POST"
-        action="{{ url_for('ratings_create', route_id=route.id ) }}"
-      >
-        {% for subfield in form.new_rating %}
-        {{ subfield.label }} {{ subfield }}
-        {% endfor %}
-        <button type="submit">Rate</button>
-      
-      </form>
-    </td>
-    <td class="xl">
-      {% if current_user.id == route.creator_account_id or current_user.role == "ADMIN" %}
+  </tr>
+  <tr class="xs">
+    <td colspan="1" class="delete-route">
+      {% if current_user.id == route.creator_account_id or current_user.role ==
+      "ADMIN" %}
       <form
         method="POST"
         action="{{ url_for('routes_delete', route_id=route.id ) }}"
       >
-        <button type="submit">Delete</button>
+        <button type="submit">Delete route</button>
       </form>
       {% endif %}
     </td>
-  </tr>
-  <tr class="xs">
-      <td colspan="1">
-          {% if current_user.id == route.creator_account_id or current_user.role == "ADMIN" %}
-          <form
-            method="POST"
-            action="{{ url_for('routes_delete', route_id=route.id ) }}"
-          >
-            <button type="submit">Delete</button>
-          </form>
-          {% endif %}
-      </td>
-    <td colspan="3" class="rate">
+    <td colspan=3 class="rate">
       <form
         method="POST"
         action="{{ url_for('ratings_create', route_id=route.id ) }}"
@@ -64,9 +43,18 @@
         {{ subfield.label }} {{ subfield }}
         {% endfor %}
         <button type="submit">Rate</button>
-      
       </form>
     </td>
+    <td colspan=1 class="delete-rating">
+        {% if route.own_rating_id(current_user) %}
+        <form
+          method="POST"
+          action="{{ url_for('ratings_delete', rating_id=route.own_rating_id(current_user) ) }}"
+        >
+          <button type="submit">Delete rating</button>
+        </form>
+        {% endif %}
+      </td>
   </tr>
   {% endfor %}
 </table>

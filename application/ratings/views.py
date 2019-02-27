@@ -29,4 +29,11 @@ def ratings_create(route_id):
         db.session().commit()
 
     return redirect(url_for("routes_index"))
-    
+
+@app.route("/ratings/<rating_id>/delete/", methods=["POST"])
+@login_required
+def ratings_delete(rating_id):
+    Rating.query.filter_by(id=rating_id).delete()
+    db.session().commit()
+
+    return redirect(url_for("routes_index"))
