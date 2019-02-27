@@ -7,16 +7,12 @@ from application.routes.models import Route
 
 @app.route("/")
 def index():
-    recommendation = Route.create_recommendation(5)
-    message = ""
-
-    if current_user.is_authenticated:
-        message = "Results are based on ratings given by other users with similar anthropometric data to yours"
-    else:
-        message = "Log in and keep your anthropometric data up to date in order to get results relevant to you"
-
+    recommendation = Route.create_recommendation(Route, current_user, 5)
+    
     if len(recommendation[0]) == 0:
         message = "Unfortunately there is not enough data yet to provide a result"
+    else:
+        message = recommendation[2]
 
     return render_template("index.html", message = message,
         routes = recommendation[0], averages = recommendation[1])

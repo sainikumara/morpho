@@ -55,11 +55,19 @@ class Route(Base):
             return ""
 
     @staticmethod
-    def create_recommendation(number_of_recommendations):
-        if current_user.is_authenticated:
-            user = current_user
+    def create_generic_recommendation(number_of_recommendations):
+        stmt = text("SELECT route_id, AVG(value) AS avg FROM rating "
+                    "GROUP BY route_id ORDER BY avg DESC LIMIT :how_many").params(
+                        how_many = number_of_recommendations
+                    )
+
+        return stmt
+
+    @staticmethod
+    def create_recommendation(self, user, number_of_recommendations):
+        if user.is_authenticated:
             stmt = text("SELECT route_id, AVG(value) AS avg FROM "
-	                "(SELECT * from rating WHERE NOT route_id IN "
+	                "(SELECT * FROM rating WHERE NOT route_id IN "
 	                "(SELECT rating.route_id from rating WHERE rating.account_id=:user_id)"
 	                "AND rater_height BETWEEN :height - 3 AND :height + 3 "
 	                "AND rater_weight BETWEEN :weight - 3 AND :weight + 3 "
@@ -67,20 +75,25 @@ class Route(Base):
 	                "GROUP BY route_id "
 	                "ORDER BY avg DESC "
 	                "LIMIT :how_many").params(
-                        user_id=user.get_id(),
+                        user_id = user.get_id(),
                         height = user.get_height(),
                         weight = user.get_weight(),
                         arm_span = user.get_arm_span(),
                         how_many = number_of_recommendations
                     )
+
+            message = "Results are based on ratings given by other users with similar anthropometric data to yours"
             
         else:
-            stmt = text("SELECT route_id, AVG(value) AS avg FROM rating "
-                    "GROUP BY route_id ORDER BY avg DESC LIMIT :how_many").params(
-                        how_many = number_of_recommendations
-                    )
+            stmt = self.create_generic_recommendation(number_of_recommendations)
+            message = "Log in and keep your anthropometric data up to date in order to get results relevant to you"
 
         res = db.engine.execute(stmt)
+
+        if user.is_authenticated and not res.fetchall():
+            message = "Results are based on ratings given by other users, but there isn't enough data yet to make it anthropometrically relevant to you"
+            stmt = self.create_generic_recommendation(number_of_recommendations)
+            res = db.engine.execute(stmt)
 
         recommended_routes = []
         average_ratings = []
@@ -90,15 +103,15 @@ class Route(Base):
             average_rating = row[1]
             average_ratings.append("{0:.2f}".format(average_rating))
         
-        return recommended_routes, average_ratings
+        return recommended_routes, average_ratings, message
 
 
     @staticmethod
-    def find_routes_user_has_rated():
+    def find_routes_user_has_rated(user):
         stmt = text("SELECT Route.id FROM Route"
                      " LEFT JOIN Rating ON Rating.route_id = Route.id"
                      " WHERE Rating.account_id = :user_id"
-                     " ORDER BY Route.grade").params(user_id = current_user.id)
+                     " ORDER BY Route.grade").params(user_id = user.id)
         res = db.engine.execute(stmt)
 
         ids_of_routes_rated = []
@@ -107,8 +120,8 @@ class Route(Base):
 
         return ids_of_routes_rated
 
-    def routes_user_has_rated(self):
-        ids = self.find_routes_user_has_rated()
+    def routes_user_has_rated(self, user):
+        ids = self.find_routes_user_has_rated(user)
 
         routes_rated = []
         for id in ids:
