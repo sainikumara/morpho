@@ -18,9 +18,9 @@
         action="{{ url_for('change_role', user_id=user.id ) }}"
       >
         {% if user.role != "ADMIN" %}
-        <button type="submit">Give</button>
+        <button type="submit" class="admin-give">Give</button>
         {% else %}
-        <button type="submit">Take</button>
+        <button type="submit" class="admin-take">Take</button>
         {% endif %}
       </form>
     </td>
