@@ -21,7 +21,7 @@ def routes_index():
 def routes_form():
     return render_template("routes/new.html", form = RouteForm(), message = "")
 
-@app.route("/<route_id>/delete/", methods=["POST"])
+@app.route("/routes/<route_id>/delete/", methods=["POST"])
 @login_required
 def routes_delete(route_id):
     Rating.query.filter_by(route_id=route_id).delete()
