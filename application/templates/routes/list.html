@@ -1,5 +1,10 @@
 {% extends "layout.html" %} {% block body %}
 <h2>All routes</h2>
+<p class="centered" id="table-width-p">
+  Please note that each rating saves the anthropometric data you have added at
+  the moment of rating. Ratings are meant to reflect how much a user with
+  certain body type likes each route.
+</p>
 <table class="table">
   <tr>
     <th>Route</th>
@@ -9,8 +14,6 @@
     {% if current_user.is_authenticated %}
     <th>You Rated</th>
     {% endif %}
-    <th></th>
-    <th></th>
   </tr>
   {% for route in routes %}
   <tr>
@@ -34,7 +37,7 @@
       </form>
       {% endif %}
     </td>
-    <td colspan=3 class="rate">
+    <td colspan="3" class="rate">
       <form
         method="POST"
         action="{{ url_for('ratings_create', route_id=route.id ) }}"
@@ -45,16 +48,16 @@
         <button type="submit">Rate</button>
       </form>
     </td>
-    <td colspan=1 class="delete-rating">
-        {% if route.own_rating_id(current_user) %}
-        <form
-          method="POST"
-          action="{{ url_for('ratings_delete', rating_id=route.own_rating_id(current_user) ) }}"
-        >
-          <button type="submit">Delete rating</button>
-        </form>
-        {% endif %}
-      </td>
+    {% if current_user.is_authenticated and route.own_rating_id(current_user) %}
+    <td colspan="1" class="delete-rating">
+      <form
+        method="POST"
+        action="{{ url_for('ratings_delete', rating_id=route.own_rating_id(current_user) ) }}"
+      >
+        <button type="submit">Delete rating</button>
+      </form>
+    </td>
+    {% endif %}
   </tr>
   {% endfor %}
 </table>
