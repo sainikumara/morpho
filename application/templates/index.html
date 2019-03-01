@@ -34,11 +34,11 @@
       </tr>
       {% endfor %}
     </table>
-  </div>
-  <div class="centered-content">
+
     <h3>Statistics</h3>
 
     <div class="row"></div>
+    
       <div class="row-item">
         <h4>Top Grades</h4>
         <table>
@@ -58,6 +58,26 @@
           {% endfor %}
         </table>
       </div>
+
+      <div class="row-item">
+          <h4>Top Raters</h4>
+          <table>
+            <tr>
+              <th>
+                Username
+              </th>
+              <th>
+                Ratings
+              </th>
+            </tr>
+            {% for user in top_raters %}
+            <tr>
+              <td>{{ user[0] }}</td>
+              <td>{{ user[1] }}</td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
     </div>
   </div>
 </div>

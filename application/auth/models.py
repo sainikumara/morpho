@@ -70,3 +70,23 @@ class User(Base):
             return ["ADMIN"]
         else:
             return ["DEFAULT"]
+
+    @staticmethod
+    def top_raters():
+        stmt = text("SELECT account.username AS name, COUNT(rating.id) AS ratings FROM account "
+                    "INNER JOIN rating ON rating.account_id = account.id "
+                    "GROUP BY name "
+	                "ORDER BY ratings DESC "
+                    "LIMIT 5")
+        res = db.engine.execute(stmt)
+
+        ratings_of_users = []
+        for row in res:
+            user_and_ratings = []
+            username = row[0]
+            ratings = row[1]
+            user_and_ratings.append(username)
+            user_and_ratings.append(ratings)
+            ratings_of_users.append(user_and_ratings)
+
+        return ratings_of_users
