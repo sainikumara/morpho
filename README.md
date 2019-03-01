@@ -11,11 +11,11 @@ Sovelluksen tarkoituksena on tarjota hupia ja hyötyä kiipeilyharrastukseen ant
 - käyttäjätilin luominen
   - ylläpitäjä voi myös poistaa käyttäjiä, jotka eivät ole ylläpitäjiä, ja antaa ja poistaa ylläpito-oikeuksia
 - kirjautuminen sisään ja ulos
-- omien mittojen lisääminen ja muokkaus
+- omien mittojen ja greidien lisääminen ja muokkaus
 - reitin luominen
   - ylläpitäjä ja reitin luoja voivat myös poistaa reitin
 - reittien selaaminen
-- reitin arvostelu, oman arvostelun muokkaus
+- reitin arvostelu, oman arvostelun muokkaus ja poisto
 - suositusten haku
 
 Suosituksia muodostavaa järjestelmää voi kehittää varmasti loputtomasti, mutta aluksi lähdetään liikkeelle yksinkertaisesta konseptista.
