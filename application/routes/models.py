@@ -115,9 +115,9 @@ class Route(Base):
 
     @staticmethod
     def grades_with_best_ratings():
-        stmt = text("SELECT Route.grade AS grade, AVG(Rating.value) AS avg FROM Route "
-                    "INNER JOIN Rating ON Rating.route_id = Route.id "
-                    "GROUP BY Route.grade "
+        stmt = text("SELECT route.grade AS grade, AVG(rating.value) AS avg FROM route "
+                    "INNER JOIN rating ON rating.route_id = route.id "
+                    "GROUP BY grade "
 	                "ORDER BY avg DESC "
                     "LIMIT 5")
         res = db.engine.execute(stmt)
@@ -135,10 +135,10 @@ class Route(Base):
 
     @staticmethod
     def find_routes_user_has_rated(user):
-        stmt = text("SELECT Route.id FROM Route"
-                    " LEFT JOIN Rating ON Rating.route_id = Route.id"
-                    " WHERE Rating.account_id = :user_id"
-                    " ORDER BY Route.grade").params(user_id = user.id)
+        stmt = text("SELECT route.id FROM route"
+                    " LEFT JOIN rating ON rating.route_id = route.id"
+                    " WHERE rating.account_id = :user_id"
+                    " ORDER BY route.grade").params(user_id = user.id)
         res = db.engine.execute(stmt)
 
         ids_of_routes_rated = []
