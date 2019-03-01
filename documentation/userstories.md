@@ -19,7 +19,7 @@ route INNER JOIN rating ON route.id = rating.route_id
 WHERE NOT route.id IN
 (SELECT rating.route_id from rating WHERE rating.account_id = 2)
 AND rater_height BETWEEN 163 - 3 AND 163 + 3
-AND rater_weight BETWEEN 55 - 3AND 55 + 3
+AND rater_weight BETWEEN 55 - 3 AND 55 + 3
 AND rater_arm_span BETWEEN 160 - 3 AND 160 + 3
 GROUP BY route.name, route.grade
 ORDER BY avg DESC
@@ -33,7 +33,7 @@ INNER JOIN grades_of_users ON route.grade = grades_of_users.grade_id
 WHERE NOT route.id IN
 (SELECT rating.route_id from rating WHERE rating.account_id = 2)
 AND rater_height BETWEEN 163 - 3 AND 163 + 3
-AND rater_weight BETWEEN 55 - 3AND 55 + 3
+AND rater_weight BETWEEN 55 - 3 AND 55 + 3
 AND rater_arm_span BETWEEN 160 - 3 AND 160 + 3
 AND grades_of_users.user_id = 2 
 GROUP BY route.name, route.grade
