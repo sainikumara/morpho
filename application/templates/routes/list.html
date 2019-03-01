@@ -26,7 +26,7 @@
     {% endif %}
   </tr>
   <tr class="xs">
-    <td colspan="1" class="delete-route">
+    <td colspan="2" class="delete-route">
       {% if current_user.id == route.creator_account_id or current_user.role ==
       "ADMIN" %}
       <form
@@ -37,7 +37,7 @@
       </form>
       {% endif %}
     </td>
-    <td colspan="3" class="rate">
+    <td colspan="2" class="rate">
       <form
         method="POST"
         action="{{ url_for('ratings_create', route_id=route.id ) }}"
