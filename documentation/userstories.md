@@ -4,7 +4,7 @@
 - Peruskäyttäjänä haluan luoda sovellukseen yksilöllisen käyttäjätunnuksen. (toteutettu)
 - Peruskäyttäjänä haluan kirjautua sovellukseen sisään, jotta voin saada yksilöidyn käyttökokemuksen. (toteutettu)
 - Peruskäyttäjänä haluan lisätä sovellukseen reittejä. (toteutettu)
-- Peruskäyttäjänä haluan voida antaa reiteille arvosanoja ja muokata niitä. (toteutettu)
+- Peruskäyttäjänä haluan voida antaa reiteille arvosanoja ja muokata tai poistaa niitä. (toteutettu)
 - Peruskäyttäjänä haluan nähdä, mitä arvosanoja olen itse ja mitä arvosanoja muut käyttäjät ovat antaneet reiteille. (toteutettu)
 ```
 SELECT value FROM Rating WHERE route_id = ? AND account_id = ?;
@@ -24,10 +24,9 @@ GROUP BY route_id
 ORDER BY avg DESC
 LIMIT ?;
 ```
-
+- peruskäyttäjänä haluan rajata suositeltuja reittejä sen mukaan, mitkä greidit kiinnostavat juuri minua. (toteutettu)
 
 ## Ylläpitäjä
 - Ylläpitäjänä haluan voida poistaa reitin. (toteutettu)
 - Ylläpitäjänä haluan voida poistaa käyttäjän, joka häiriköi sovelluksessa.(toteutettu)
 - Ylläpitäjänä haluan voida antaa ylläpito-oikeuksia muille käyttäjille ja tarvittaessa ottaa niitä pois. (toteutettu)
-- Ylläpitäjänä haluan voida poistaa asiattomina pitämiäni arvosteluja.
