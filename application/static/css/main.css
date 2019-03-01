@@ -112,8 +112,10 @@ input[type="radio"] {
 th {
   max-width: 150px !important;
 }
+table td, table th {
+  border-top: 0 !important;
+}
 td, th {
-  border-top: none;
   text-align: center;
   padding-left: 10px;
   padding-right: 10px;
