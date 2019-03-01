@@ -59,35 +59,41 @@ class Route(Base):
 
     @staticmethod
     def create_generic_recommendation(number_of_recommendations):
-        stmt = text("SELECT route_id, AVG(value) AS avg FROM rating "
+        stmt = text("SELECT route.name, route.grade, COUNT(rating.value) as ratings, AVG(rating.value) AS avg FROM "
+                    "route INNER JOIN rating ON route.id = rating.route_id "
                     "GROUP BY route_id ORDER BY avg DESC LIMIT :how_many").params(
                         how_many = number_of_recommendations
                     )
         return stmt
 
     @staticmethod
-    def create_individual_recommendation(user, number_of_recommendations):
-        stmt = text("SELECT route_id, AVG(value) AS avg FROM "
-	                "(SELECT * FROM rating WHERE NOT route_id IN "
+    def create_individual_recommendation(user, height_offset, weight_offset, arm_span_offset, number_of_recommendations):
+        stmt = text("SELECT route.name, route.grade, COUNT(rating.value) as ratings, AVG(rating.value) AS avg FROM "
+	                "route INNER JOIN rating ON route.id = rating.route_id "
+                    "WHERE NOT route.id IN "
 	                "(SELECT rating.route_id from rating WHERE rating.account_id=:user_id)"
-	                "AND rater_height BETWEEN :height - 3 AND :height + 3 "
-	                "AND rater_weight BETWEEN :weight - 3 AND :weight + 3 "
-	                "AND rater_arm_span BETWEEN :arm_span - 3 AND :arm_span + 3) AS matching_ratings "
-	                "GROUP BY route_id "
+	                "AND rater_height BETWEEN :height - :height_offset AND :height + :height_offset "
+	                "AND rater_weight BETWEEN :weight - :weight_offset AND :weight + :weight_offset "
+	                "AND rater_arm_span BETWEEN :arm_span - :arm_span_offset AND :arm_span + :arm_span_offset "
+	                "GROUP BY route.id "
 	                "ORDER BY avg DESC "
 	                "LIMIT :how_many").params(
                         user_id = user.get_id(),
                         height = user.get_height(),
+                        height_offset = height_offset,
                         weight = user.get_weight(),
+                        weight_offset = weight_offset,
                         arm_span = user.get_arm_span(),
+                        arm_span_offset = arm_span_offset,
                         how_many = number_of_recommendations
                     )
+
         return stmt
 
     @staticmethod
     def create_recommendation(self, user, number_of_recommendations):
         if user.is_authenticated:
-            stmt = self.create_individual_recommendation(user, number_of_recommendations)
+            stmt = self.create_individual_recommendation(user, 3, 3, 3, number_of_recommendations)
             message = "Results are based on ratings given by other users with similar anthropometric data to yours"
             
         else:
@@ -96,22 +102,28 @@ class Route(Base):
 
         res = db.engine.execute(stmt)
         result = res.fetchall()
-        
+
         if user.is_authenticated and result == []:
             message = "Results are based on ratings given by other users, but there isn't enough data yet to make it anthropometrically relevant to you"
             stmt = self.create_generic_recommendation(number_of_recommendations)
             res = db.engine.execute(stmt)
             result = res.fetchall()
 
-        recommended_routes = []
-        average_ratings = []
+        recommendation = []
         for row in result:
-            route = Route.query.filter_by(id = row[0]).first()
-            recommended_routes.append(route)
-            average_rating = row[1]
-            average_ratings.append("{0:.2f}".format(average_rating))
+            route_to_recommend = []
+            route_name = row[0]
+            route_grade = row[1]
+            ratings = row[2]
+            avg = row[3]
+            route_to_recommend.append(route_name)
+            route_to_recommend.append(route_grade)
+            route_to_recommend.append(ratings)
+            route_to_recommend.append("{0:.2f}".format(avg))
+
+            recommendation.append(route_to_recommend)
         
-        return recommended_routes, average_ratings, message
+        return recommendation, message
 
     @staticmethod
     def grades_with_best_ratings():

@@ -15,22 +15,15 @@
       <tr>
         <th>Route</th>
         <th>Grade</th>
-      </tr>
-      {% for route in routes %}
-      <tr>
-        <td>{{ route.name }}</td>
-        <td>{{ route.grade }}</td>
-      </tr>
-      {% endfor %}
-    </table>
-
-    <table style="display: inline-block">
-      <tr>
+        <th>Ratings</th>
         <th>Average</th>
       </tr>
-      {% for average in averages %}
+      {% for route in recommendation %}
       <tr>
-        <td>{{ average }}</td>
+        <td>{{ route[0] }}</td>
+        <td>{{ route[1] }}</td>
+        <td>{{ route[2] }}</td>
+        <td>{{ route[3] }}</td>
       </tr>
       {% endfor %}
     </table>
