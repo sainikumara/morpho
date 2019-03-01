@@ -198,17 +198,16 @@ class Route(Base):
         
         return routes_rated
 
-grades_of_users = db.Table('grades_of_users',
-        db.Column('user_id', db.Integer, 
-        db.ForeignKey('account.id'), primary_key = True ),
-        db.Column('grade_id', 
-        db.Integer, db.ForeignKey('grade.id'), primary_key = True))
+grades_of_users = db.Table("grades_of_users",
+        db.Column("user_id", db.Integer, db.ForeignKey("account.id")),
+        db.Column("grade_id", db.String(2), db.ForeignKey("grade.id")))
 
 class Grade(db.Model):
     id = db.Column(db.String(2), nullable = False, primary_key = True)
     
     routes = db.relationship("Route", backref = "grade_of_route", lazy=True)
-    users = db.relationship("User", secondary = grades_of_users, backref = db.backref('grades', lazy = True))
+    users = db.relationship("User", secondary = grades_of_users,
+        backref = db.backref("grades_of_users", lazy="dynamic"), lazy="dynamic")
 
     def __init__(self, grade_id):
         self.id = grade_id
