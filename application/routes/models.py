@@ -140,9 +140,9 @@ class Route(Base):
         for row in res:
             rating_of_grade = []
             grade = row[0]
-            rating = row[1]
+            avg = row[1]
             rating_of_grade.append(grade)
-            rating_of_grade.append(rating)
+            rating_of_grade.append("{0:.2f}".format(avg))
             ratings_of_grades.append(rating_of_grade)
 
         return ratings_of_grades
