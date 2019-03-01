@@ -85,6 +85,14 @@ def load_user(user_id):
 try: 
     db.create_all()
 
+    stmt = text("CREATE TABLE grades_of_users "
+                "(user_id INTEGER NOT NULL, grade_id INTEGER NOT NULL, "
+                "PRIMARY KEY (user_id, grade_id), "
+                "FOREIGN KEY(user_id) REFERENCES account (id), "
+                "FOREIGN KEY(grade_id) REFERENCES grade (id))")
+    res = db.engine.execute(stmt)
+    db.session().commit()
+    
     from application.routes.models import Grade
     if Grade.query.count() != 19:
         db.session.query(Grade).delete()
