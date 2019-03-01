@@ -61,7 +61,7 @@ class Route(Base):
     def create_generic_recommendation(number_of_recommendations):
         stmt = text("SELECT route.name, route.grade, COUNT(rating.value) as ratings, AVG(rating.value) AS avg FROM "
                     "route INNER JOIN rating ON route.id = rating.route_id "
-                    "GROUP BY route_id ORDER BY avg DESC LIMIT :how_many").params(
+                    "GROUP BY route.name ORDER BY avg DESC LIMIT :how_many").params(
                         how_many = number_of_recommendations
                     )
         return stmt
@@ -75,7 +75,7 @@ class Route(Base):
 	                "AND rater_height BETWEEN :height - :height_offset AND :height + :height_offset "
 	                "AND rater_weight BETWEEN :weight - :weight_offset AND :weight + :weight_offset "
 	                "AND rater_arm_span BETWEEN :arm_span - :arm_span_offset AND :arm_span + :arm_span_offset "
-	                "GROUP BY route.id "
+	                "GROUP BY route.name "
 	                "ORDER BY avg DESC "
 	                "LIMIT :how_many").params(
                         user_id = user.get_id(),
