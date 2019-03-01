@@ -11,6 +11,9 @@ INSERT INTO account (username, _password) VALUES ('apina', 'banaani');
 ```
 - Peruskäyttäjänä haluan kirjautua sovellukseen sisään, jotta voin saada yksilöidyn käyttökokemuksen. (toteutettu)
 - Peruskäyttäjänä haluan lisätä sovellukseen reittejä. (toteutettu)
+```
+INSERT INTO route (name, grade) VALUES ('Arm Killer', '6C');
+```
 - Peruskäyttäjänä haluan voida antaa reiteille arvosanoja ja muokata tai poistaa niitä. (toteutettu)
 - Peruskäyttäjänä haluan nähdä, mitä arvosanoja olen itse ja mitä arvosanoja muut käyttäjät ovat antaneet reiteille. (toteutettu)
 ```
@@ -59,9 +62,15 @@ LIMIT 5;
 
 ## Ylläpitäjä
 - Ylläpitäjänä haluan voida poistaa reitin. (toteutettu)
+```
+DELETE FROM route WHERE id = 5;
+```
 - Ylläpitäjänä haluan nähdä listan kaikista käyttäjistä. (toteutettu)
 ```
 SELECT * FROM account ORDER BY account.username;
 ```
 - Ylläpitäjänä haluan voida poistaa käyttäjän, joka häiriköi sovelluksessa.(toteutettu)
+```
+DELETE FROM user WHERE id = 3;
+```
 - Ylläpitäjänä haluan voida antaa ylläpito-oikeuksia muille käyttäjille ja tarvittaessa ottaa niitä pois. (toteutettu)
