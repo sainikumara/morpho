@@ -1,7 +1,7 @@
 from application import db, bcrypt
-from sqlalchemy.ext.hybrid import hybrid_property
 from application.models import Base
 
+from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.sql import text
 
 class User(Base):
@@ -90,3 +90,23 @@ class User(Base):
             ratings_of_users.append(user_and_ratings)
 
         return ratings_of_users
+
+    @staticmethod
+    def interested_in_grades(user):
+        stmt = text("SELECT grade_id FROM grades_of_users WHERE user_id = :user_id").params(user_id = user.id)
+        res = db.engine.execute(stmt)
+
+        grades = []
+        for row in res:
+            grades.append(row[0])
+
+        return grades
+
+    @staticmethod
+    def remove_grade(user, grade_id):
+        stmt = text("DELETE FROM grades_of_users "
+                    "WHERE user_id = :user_id AND grade_id =:grade_id"
+                    ).params(user_id = user.id, grade_id = grade_id)
+        res = db.engine.execute(stmt)
+
+        db.session().commit()

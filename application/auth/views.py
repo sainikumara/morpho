@@ -3,7 +3,8 @@ from flask_login import login_user, logout_user, current_user
 
 from application import app, db, login_required
 from application.auth.models import User
-from application.auth.forms import LoginForm, NewUserForm, UserHeightForm, UserWeightForm, UserArmSpanForm
+from application.routes.models import Grade, grades_of_users
+from application.auth.forms import LoginForm, NewUserForm, UserHeightForm, UserWeightForm, UserArmSpanForm, UserGradeForm
 
 @app.route("/auth/login", methods = ["GET", "POST"])
 def auth_login():
@@ -11,8 +12,6 @@ def auth_login():
         return render_template("auth/loginform.html", form = LoginForm())
 
     form = LoginForm(request.form)
-    # mahdolliset validoinnit
-
     user = User.query.filter_by(username=form.username.data).first()
 
     if (user is None) or not user.is_correct_password(form.password.data):
@@ -63,6 +62,7 @@ def user_data():
         height_form = UserHeightForm(),
         weight_form = UserWeightForm(),
         arm_span_form = UserArmSpanForm(),
+        user_grade_form = UserGradeForm(),
         user=current_user)
 
 @app.route("/user_data/height/", methods=["POST"])
@@ -76,6 +76,7 @@ def user_height():
             height_form = form,
             weight_form = UserWeightForm(),
             arm_span_form = UserArmSpanForm(),
+            user_grade_form = UserGradeForm(),
             user = current_user)
 
     user = current_user
@@ -99,6 +100,7 @@ def user_weight():
             height_form = UserHeightForm(),
             weight_form = form,
             arm_span_form = UserArmSpanForm(),
+            user_grade_form = UserGradeForm(),
             user = current_user)
 
     user = current_user
@@ -122,6 +124,7 @@ def user_arm_span():
             height_form = UserHeightForm(),
             weight_form = UserWeightForm(),
             arm_span_form = form,
+            user_grade_form = UserGradeForm(),
             user = current_user)
 
     user = current_user
@@ -129,6 +132,34 @@ def user_arm_span():
     arm_span = form.new_arm_span.data
     if isinstance(arm_span, int):
         user._set_arm_span(arm_span)
+
+    db.session().commit()
+
+    return redirect(url_for("user_data"))
+
+@app.route("/user_data/grades/", methods=["POST"])
+@login_required()
+def user_grades():
+    print("")
+    print("TULOSTETAAN")
+    print("")
+    
+    form = UserGradeForm(request.form)
+
+    if not form.validate():
+        return render_template("auth/user_data.html",
+            height_form = UserHeightForm(),
+            weight_form = UserWeightForm(),
+            arm_span_form = UserArmSpanForm(),
+            user_grade_form = form,
+            user = current_user)
+
+    user = current_user
+
+    grades_data = form.grades.data
+    for grade_data in grades_data:
+        grade = Grade.query.filter_by(id = grade_data).first()
+        grade.users.append(user)
 
     db.session().commit()
 
@@ -170,3 +201,12 @@ def users_delete(user_id):
     db.session().commit()
 
     return redirect(url_for("users_index"))
+
+@app.route("/users/<grade_id>/remove_grade/", methods=["POST"])
+@login_required()
+def grade_remove(grade_id):
+    user = current_user
+
+    user.remove_grade(user, grade_id)
+
+    return redirect(url_for("user_data"))

@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 
 from application import app, db
 from application.routes.models import Route
+from application.routes.models import Grade
 from application.ratings.models import Rating
 from application.auth.models import User
 from application.routes.forms import RouteForm
@@ -40,7 +41,9 @@ def routes_create():
 
     route_name = form.name.data
     if Route.query.filter_by(name=route_name).first() is None:
-        route = Route(route_name, form.grade.data)
+        grade = form.grade.data
+        if Grade.query.filter_by(id=grade).first():
+            route = Route(route_name, grade)
     else:
         return render_template("routes/new.html", form = RouteForm(), message = "A route with this name exists already.")
 

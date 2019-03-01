@@ -2,16 +2,17 @@ from application import db
 from application.models import Base
 
 from sqlalchemy.sql import text
+
 from application.ratings.models import Rating
 
 class Route(Base):
     name = db.Column(db.String(144), nullable=False)
-    grade = db.Column(db.String(2), nullable=False)
-
-    creator_account_id = db.Column(db.Integer, db.ForeignKey('account.id'),
+    grade = db.Column(db.String(2), db.ForeignKey("grade.id"),
+                           nullable=False)
+    creator_account_id = db.Column(db.Integer, db.ForeignKey("account.id"),
                            nullable=True)
     
-    ratings = db.relationship("Rating", backref='route', lazy=True)
+    ratings = db.relationship("Rating", backref="route", lazy=True)
 
     def __init__(self, name, grade):
         self.name = name
@@ -89,13 +90,40 @@ class Route(Base):
                         arm_span_offset = arm_span_offset,
                         how_many = number_of_recommendations
                     )
+        return stmt
 
+    @staticmethod
+    def create_individual_recommendation_with_grade_limit(user, height_offset, weight_offset, arm_span_offset, number_of_recommendations):
+        stmt = text("SELECT route.name, route.grade, COUNT(rating.value) as ratings, AVG(rating.value) AS avg FROM "
+	                "route INNER JOIN rating ON route.id = rating.route_id "
+                    "INNER JOIN grades_of_users ON route.grade = grades_of_users.grade_id "
+                    "WHERE NOT route.id IN "
+	                "(SELECT rating.route_id from rating WHERE rating.account_id=:user_id)"
+	                "AND rater_height BETWEEN :height - :height_offset AND :height + :height_offset "
+	                "AND rater_weight BETWEEN :weight - :weight_offset AND :weight + :weight_offset "
+	                "AND rater_arm_span BETWEEN :arm_span - :arm_span_offset AND :arm_span + :arm_span_offset "
+                    "AND grades_of_users.user_id=:user_id "
+	                "GROUP BY route.name, route.grade "
+	                "ORDER BY avg DESC "
+	                "LIMIT :how_many").params(
+                        user_id = user.get_id(),
+                        height = user.get_height(),
+                        height_offset = height_offset,
+                        weight = user.get_weight(),
+                        weight_offset = weight_offset,
+                        arm_span = user.get_arm_span(),
+                        arm_span_offset = arm_span_offset,
+                        how_many = number_of_recommendations
+                    )
         return stmt
 
     @staticmethod
     def create_recommendation(self, user, number_of_recommendations):
         if user.is_authenticated:
-            stmt = self.create_individual_recommendation(user, 3, 3, 3, number_of_recommendations)
+            if user.interested_in_grades(user):
+                stmt = self.create_individual_recommendation_with_grade_limit(user, 3, 3, 3, number_of_recommendations)
+            else:
+                stmt = self.create_individual_recommendation(user, 3, 3, 3, number_of_recommendations)
             message = "Results are based on ratings given by other users with similar anthropometric data to yours"
             
         else:
@@ -169,3 +197,18 @@ class Route(Base):
             routes_rated.append(Route.query.filter_by(id = id).first())
         
         return routes_rated
+
+grades_of_users = db.Table('grades_of_users',
+        db.Column('user_id', db.Integer, 
+        db.ForeignKey('account.id'), primary_key = True ),
+        db.Column('grade_id', 
+        db.Integer, db.ForeignKey('grade.id'), primary_key = True))
+
+class Grade(db.Model):
+    id = db.Column(db.String(2), nullable = False, primary_key = True)
+    
+    routes = db.relationship("Route", backref = "grade_of_route", lazy=True)
+    users = db.relationship("User", secondary = grades_of_users, backref = db.backref('grades', lazy = True))
+
+    def __init__(self, grade_id):
+        self.id = grade_id

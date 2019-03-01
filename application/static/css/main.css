@@ -91,6 +91,9 @@ button.admin-take:hover,
 button.admin-take:focus {
   background-color: #87141f;
 }
+.inline-button {
+  display: inline-block;
+}
 input,
 select {
   border-radius: 5px;
