@@ -12,9 +12,19 @@ CREATE TABLE account (
 	PRIMARY KEY (id), 
 	UNIQUE (username)
 )
-```
+ 
+CREATE TABLE grade (
+	id VARCHAR(2) NOT NULL, 
+	PRIMARY KEY (id)
+)
 
-```
+CREATE TABLE grades_of_users (
+	user_id INTEGER, 
+	grade_id VARCHAR(2), 
+	FOREIGN KEY(user_id) REFERENCES account (id), 
+	FOREIGN KEY(grade_id) REFERENCES grade (id)
+)
+
 CREATE TABLE route (
 	id INTEGER NOT NULL, 
 	date_created DATETIME, 
@@ -23,11 +33,10 @@ CREATE TABLE route (
 	grade VARCHAR(2) NOT NULL, 
 	creator_account_id INTEGER, 
 	PRIMARY KEY (id), 
+	FOREIGN KEY(grade) REFERENCES grade (id), 
 	FOREIGN KEY(creator_account_id) REFERENCES account (id)
 )
-```
 
-```
 CREATE TABLE rating (
 	id INTEGER NOT NULL, 
 	date_created DATETIME, 
