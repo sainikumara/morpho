@@ -140,10 +140,6 @@ def user_arm_span():
 @app.route("/user_data/grades/", methods=["POST"])
 @login_required()
 def user_grades():
-    print("")
-    print("TULOSTETAAN")
-    print("")
-    
     form = UserGradeForm(request.form)
 
     if not form.validate():

@@ -72,6 +72,8 @@ from application.ratings import views
 from application.auth import models
 from application.auth import views
 
+from application.routes.models import grades_of_users
+
 # login 2/2
 from application.auth.models import User
 
