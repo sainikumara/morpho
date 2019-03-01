@@ -1,36 +1,65 @@
 {% extends "layout.html" %} {% block body %}
 <h2>
-  Routes according to other users
+  Routes According to Other Users
 </h2>
 
 <div class="centered">
-<p>
-  {{ message }}
-</p>
+  <div class="centered-content">
+    <h3>Recommended Routes</h3>
 
-<table style="display: inline-block">
-  <tr>
-    <th>Route</th>
-    <th>Grade</th>
-  </tr>
-  {% for route in routes %}
-  <tr>
-    <td>{{ route.name }}</td>
-    <td>{{ route.grade }}</td>
-  </tr>
-  {% endfor %}
-</table>
+    <p>
+      {{ message }}
+    </p>
 
-<table style="display: inline-block">
-  <tr>
-    <th>Average</th>
-  </tr>
-  {% for average in averages %}
-  <tr>
-    <td>{{ average }}</td>
-  </tr>
-  {% endfor %}
-</table>
+    <table style="display: inline-block">
+      <tr>
+        <th>Route</th>
+        <th>Grade</th>
+      </tr>
+      {% for route in routes %}
+      <tr>
+        <td>{{ route.name }}</td>
+        <td>{{ route.grade }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <table style="display: inline-block">
+      <tr>
+        <th>Average</th>
+      </tr>
+      {% for average in averages %}
+      <tr>
+        <td>{{ average }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  <div class="centered-content">
+    <h3>Statistics</h3>
+
+    <div class="row"></div>
+      <div class="row-item">
+        <h4>Top Grades</h4>
+        <table>
+          <tr>
+            <th>
+              Grade
+            </th>
+            <th>
+              Average
+            </th>
+          </tr>
+          {% for rating_of_grade in top_grades %}
+          <tr>
+            <td>{{ rating_of_grade[0] }}</td>
+            <td>{{ rating_of_grade[1] }}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
 
 {% endblock %}

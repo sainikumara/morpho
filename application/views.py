@@ -14,5 +14,7 @@ def index():
     else:
         message = recommendation[2]
 
+    top_grades = Route.grades_with_best_ratings()
+
     return render_template("index.html", message = message,
-        routes = recommendation[0], averages = recommendation[1])
+        routes = recommendation[0], averages = recommendation[1], top_grades = top_grades)

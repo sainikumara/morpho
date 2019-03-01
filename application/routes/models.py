@@ -63,13 +63,11 @@ class Route(Base):
                     "GROUP BY route_id ORDER BY avg DESC LIMIT :how_many").params(
                         how_many = number_of_recommendations
                     )
-
         return stmt
 
     @staticmethod
-    def create_recommendation(self, user, number_of_recommendations):
-        if user.is_authenticated:
-            stmt = text("SELECT route_id, AVG(value) AS avg FROM "
+    def create_individual_recommendation(user, number_of_recommendations):
+        stmt = text("SELECT route_id, AVG(value) AS avg FROM "
 	                "(SELECT * FROM rating WHERE NOT route_id IN "
 	                "(SELECT rating.route_id from rating WHERE rating.account_id=:user_id)"
 	                "AND rater_height BETWEEN :height - 3 AND :height + 3 "
@@ -84,7 +82,12 @@ class Route(Base):
                         arm_span = user.get_arm_span(),
                         how_many = number_of_recommendations
                     )
+        return stmt
 
+    @staticmethod
+    def create_recommendation(self, user, number_of_recommendations):
+        if user.is_authenticated:
+            stmt = self.create_individual_recommendation(user, number_of_recommendations)
             message = "Results are based on ratings given by other users with similar anthropometric data to yours"
             
         else:
@@ -110,13 +113,32 @@ class Route(Base):
         
         return recommended_routes, average_ratings, message
 
+    @staticmethod
+    def grades_with_best_ratings():
+        stmt = text("SELECT Route.grade AS grade, AVG(Rating.value) AS avg FROM Route "
+                    "INNER JOIN Rating ON Rating.route_id = Route.id "
+                    "GROUP BY Route.grade "
+	                "ORDER BY avg DESC "
+                    "LIMIT 5")
+        res = db.engine.execute(stmt)
+
+        ratings_of_grades = []
+        for row in res:
+            rating_of_grade = []
+            grade = row[0]
+            rating = row[1]
+            rating_of_grade.append(grade)
+            rating_of_grade.append(rating)
+            ratings_of_grades.append(rating_of_grade)
+
+        return ratings_of_grades
 
     @staticmethod
     def find_routes_user_has_rated(user):
         stmt = text("SELECT Route.id FROM Route"
-                     " LEFT JOIN Rating ON Rating.route_id = Route.id"
-                     " WHERE Rating.account_id = :user_id"
-                     " ORDER BY Route.grade").params(user_id = user.id)
+                    " LEFT JOIN Rating ON Rating.route_id = Route.id"
+                    " WHERE Rating.account_id = :user_id"
+                    " ORDER BY Route.grade").params(user_id = user.id)
         res = db.engine.execute(stmt)
 
         ids_of_routes_rated = []
